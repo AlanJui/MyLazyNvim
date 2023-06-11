@@ -34,7 +34,7 @@ return {
     keys = {
       -- search
       { "<C-p>", Util.telescope("files"), desc = "Find Files" },
-      { "<leader>ff", "<cmd>Telescope file_browser<cr>", desc = "Browser" },
+      { "<leader>fb", "<cmd>Telescope file_browser<cr>", desc = "Browser" },
       { "<leader>fo", "<cmd>Telescope file_browser path=%:p:h select_buffer=true<cr>", desc = "Browser on current buffer" },
       { "<leader>fc", Util.telescope("colorscheme", { enable_preview = true }), desc = "Colorscheme with preview" },
       {
@@ -54,6 +54,144 @@ return {
           },
         }),
         desc = "Goto Symbol",
+              { "<leader>:", "<cmd>Telescope command_history<cr>", desc = "Command History" },
+      -- buffers
+      {
+        "<leader>/",
+        function()
+          require("lazyvim.util").telescope("live_grep")
+        end,
+        desc = "Grep (root dir)",
+      },
+      { "<leader>,", "<cmd>Telescope buffers show_all_buffers=true<cr>", desc = "Switch Buffer" },
+      { "<leader>bf", "<cmd>lua require('telescope.builtin').buffers()<cr>", desc = "Buffers" },
+      -- code
+      { "<leader>cD", "<cmd>Telescope dap configurations<cr>", desc = "DAP Config Picker" },
+      { "<leader>co", "<cmd>Telescope aerial<cr>", desc = "Code Outline" },
+      {
+        "<leader>cS",
+        function()
+          require("lazyvim.util").telescope("lsp_workspace_symbols", {
+            symbols = {
+              "Class",
+              "Function",
+              "Method",
+              "Constructor",
+              "Interface",
+              "Module",
+              "Struct",
+              "Trait",
+              "Field",
+              "Property",
+            },
+          })
+        end,
+        desc = "Goto Symbol (Workspace)",
+      },
+      -- find
+      {
+        "<leader><space>",
+        function()
+          require("telescope.builtin").find_files({
+            theme = "dropdown",
+          })
+        end,
+        desc = "Find Files",
+      },
+      {
+        "<leader>ff",
+        "<cmd>Telescope find_files find_command=rg,--ignore,--hidden,--files prompt_prefix=🔍<cr>",
+        desc = "Find Files (root dir)",
+      },
+      {
+        "<leader>fF",
+        function()
+          -- require("telescope.builtin").find_files({ cmd = false })
+          require("telescope.builtin").find_files({
+            cwd = false,
+            previewer = true,
+            -- layout_strategy = "vertical",
+            -- layout_config = {
+            --   width = 0.8,
+            -- },
+          })
+        end,
+        desc = "Find Files (cwd)",
+      },
+      { "<leader>fB", "<cmd>Telescope file_browser<cr>", desc = "Browser" },
+      { "<leader>fr", "<cmd>Telescope frecency theme=dropdown previewer=false<cr>", desc = "Frecency Files" },
+      { "<leader>fR", "<cmd>Telescope oldfiles<cr>", desc = "Recent Files" },
+      -- git
+      { "<leader>gr", "<cmd>Telescope repo list<cr>", desc = "List Git Repo" },
+      { "<leader>gC", "<cmd>Telescope conventional_commits<cr>", desc = "Conventional Commits" },
+      { "<leader>gc", "<cmd>Telescope git_commits<CR>", desc = "commits" },
+      { "<leader>gs", "<cmd>Telescope git_status<CR>", desc = "status" },
+      -- search
+      { "<leader>sa", "<cmd>Telescope autocommands<cr>", desc = "Auto Commands" },
+      { "<leader>sb", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = "Current Buffer Fuzzy Find" },
+      { "<leader>sh", "<cmd>Telescope help_tags<cr>", desc = "Help Pages" },
+      { "<leader>sH", "<cmd>Telescope highlights<cr>", desc = "Search Highlight Groups" },
+      { "<leader>sM", "<cmd>Telescope man_pages<cr>", desc = "Man Pages" },
+      { "<leader>sm", "<cmd>Telescope marks<cr>", desc = "Jump to Mark" },
+      { "<leader>sR", "<cmd>Telescope resume<cr>", desc = "Resume" },
+      {
+        "<leader>sg",
+        function()
+          -- require("telescope.builtin").live_grep()
+          require("telescope").extensions.live_grep_args.live_grep_args()
+        end,
+        desc = "Grep (root dir)",
+      },
+      {
+        "<leader>sG",
+        function()
+          -- require("telescope.builtin").live_grep({ cwd = false })
+          require("telescope").extensions.live_grep_args.live_grep_args({ cwd = false })
+        end,
+        desc = "Grep (cwd)",
+      },
+      {
+        "<leader>sw",
+        function()
+          require("telescope.builtin").telescope("grep_string")
+        end,
+        desc = "Word (root dir)",
+      },
+      {
+        "<leader>sW",
+        function()
+          require("telescope.builtin").telescope("grep_string", { cwd = false })
+        end,
+        desc = "Word (cwd)",
+      },
+      -- trouble
+      { "<leader>xx", "<cmd>Telescope diagnostics bufnr=0<cr>", desc = "Document diagnostics" },
+      { "<leader>xX", "<cmd>Telescope diagnostics<cr>", desc = "Workspace diagnostics" },
+      -- utility
+      {
+        "<leader>up",
+        function()
+          require("telescope").extensions.project.project({ display_type = "minimal" })
+        end,
+        desc = "List",
+      },
+      -- System
+      { "<leader>zh", "<cmd>lua require('telescope.builtin').help_tags()<cr>", desc = "Help" },
+      { "<leader>zc", "<cmd>Telescope commands<cr>", desc = "Commands" },
+      { "<leader>zC", "<cmd>Telescope command_history<cr>", desc = "Command History" },
+      { "<leader>zk", "<cmd>Telescope keymaps<cr>", desc = "Keymaps" },
+      { "<leader>zo", "<cmd>Telescope vim_options<cr>", desc = "Options" },
+      { "<leader>zp", "<cmd>Telescope lazy<cr>", desc = "Plugins" },
+      { "<leader>zP", "<cmd>lua require'telescope.builtin'.planets{}<cr>", desc = "Pickers" },
+      { "<leader>zs", "<cmd>Telescope luasnip<cr>", desc = "Snippets" },
+      {
+        "<leader>zS",
+        function()
+          require("telescope.builtin").colorscheme({ enable_preview = true })
+        end,
+        desc = "Colorscheme with preview",
+      },
+
       },
     },
     config = function()

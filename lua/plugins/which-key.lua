@@ -118,6 +118,11 @@ return {
           },
         },
         r = {
+          name = "Run Code",
+          p = { name = "+Python" },
+          d = { name = "+Django" },
+        },
+        R = {
           name = "Replace",
           -- Spectre
           r = { [[<cmd>lua require('spectre').open_visual({select_word=true})<cr>]], "Replace cursor word" },
@@ -137,6 +142,9 @@ return {
           -- vim-test plugin
         },
         u = {
+          name = "Utilities",
+        },
+        U = {
           name = "Url view/Toggle option",
           -- urlview
           u = { "<cmd>UrlView buffer<cr>", "Find URL and open" },
@@ -156,8 +164,9 @@ return {
           o = { "<cmd>lua require('nvim-window').pick()<cr>", "Choose window" },
           m = { "<cmd>MarkdownPreview<cr>", "Open markdown preview window" },
           l = { "<Plug>TranslateW", "Translate word online" },
-          -- w = {'<cmd>MacDictPopup<cr>', 'search cursor word in macOS distionary'},
-          -- d = {'<cmd>MacDictWord<cr>', 'search in macOS distionary and show in quickfix'},
+        },
+        x = {
+          name = "Trouble",
         },
       }
 

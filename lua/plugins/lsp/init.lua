@@ -175,27 +175,25 @@ return {
         border = "rounded",
         sources = {
           -- formatting
-          nls.builtins.formatting.stylua.with({
-            extra_args = {
-              "--column-limit",
-              "120",
-              "--line_endings",
-              "Unix",
-              "--indent-type",
-              "Spaces",
-              "--indent-width",
-              "2",
-              "--quote_style",
-              "AutoPreferDouble",
-              "--call_parentheses",
-              "None",
-              "--collapse_simple_statement",
-              "None",
-            },
-          }),
-          nls.builtins.formatting.prettier.with({
-            extra_args = { "--single-quote", "false" },
-          }),
+          nls.builtins.formatting.stylua,
+          -- nls.builtins.formatting.stylua.with({
+          --   extra_args = {
+          --     "--column-limit",
+          --     "120",
+          --     "--line_endings",
+          --     "Unix",
+          --     "--indent-type",
+          --     "Spaces",
+          --     "--indent-width",
+          --     "2",
+          --     "--quote_style",
+          --     "AutoPreferDouble",
+          --     "--call_parentheses",
+          --     "None",
+          --     "--collapse_simple_statement",
+          --     "None",
+          --   },
+          -- }),
           nls.builtins.diagnostics.pylint, -- Python
           nls.builtins.diagnostics.mypy.with({ extra_args = { "--config-file", "pyproject.toml" } }),
           nls.builtins.diagnostics.pydocstyle.with({ extra_args = { "--config=$ROOT/setup.cfg" } }),

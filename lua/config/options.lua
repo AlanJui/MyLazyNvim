@@ -44,7 +44,7 @@ opt.undoreload = 1000
 opt.updatetime = 200 -- Save swap file and trigger CursorHold
 opt.wildmode = "longest:full,full" -- Command-line completion mode
 opt.winminwidth = 5 -- Minimum window width
-opt.wrap = true -- Enable line wrap
+opt.wrap = false -- Enable line wrap
 
 -- Backup
 opt.swapfile = false --- Swap not needed
@@ -70,3 +70,16 @@ local cmd = vim.cmd
 -- remove trailing whitespaces
 cmd([[autocmd BufWritePre * %s/\s\+$//e]])
 cmd([[autocmd BufWritePre * %s/\n\+\%$//e]])
+
+-------------------------------------------------------------
+-- My Options
+-------------------------------------------------------------
+-- line numbers
+opt.relativenumber = true -- show relative line numbers
+opt.number = true -- shows absolute line number on cursor line (when relative number is on)
+
+-- tabs & indentation
+opt.tabstop = 2 -- 2 spaces for tabs (prettier default)
+opt.shiftwidth = 2 -- 2 spaces for indent width
+opt.expandtab = true -- expand tab to spaces
+-- opt.autoindent = true -- copy indent from current line when starting new one
