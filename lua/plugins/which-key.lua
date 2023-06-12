@@ -43,15 +43,6 @@ return {
         --   r = { "<Cmd>DBUIRenameBuffer<Cr>", "Rename buffer" },
         --   q = { "<Cmd>DBUILastQueryInfo<Cr>", "Last query info" },
         -- },
-        d = {
-          name = "Diff/Debug",
-          f = {
-            name = "Diff view",
-            o = { "<cmd>DiffviewOpen<CR>", "Open diffview" },
-            u = { "<cmd>DiffviewOpen -uno<CR>", "Open diffview hide untracked files" },
-            h = { "<cmd>DiffviewFileHistory<CR>", "Open diffview file history" },
-          },
-        },
         f = {
           name = "Fuzzy finder",
           -- fzf.vim
@@ -100,6 +91,15 @@ return {
           k = { "<cmd>lua require 'gitsigns'.prev_hunk()<cr>", "Prev Hunk" },
           a = { "<cmd>lua require 'gitsigns'.stage_hunk()<cr>", "Stage Hunk" },
           d = { "<cmd>lua require 'gitsigns'.diffthis()<cr>", "Diff This" },
+          D = {
+            name = "Diff/Debug",
+            f = {
+              name = "Diff view",
+              o = { "<cmd>DiffviewOpen<CR>", "Open diffview" },
+              u = { "<cmd>DiffviewOpen -uno<CR>", "Open diffview hide untracked files" },
+              h = { "<cmd>DiffviewFileHistory<CR>", "Open diffview file history" },
+            },
+          },
           e = {
             name = "Extra action",
             b = { "<cmd>Git blame<cr>", "Blame" },

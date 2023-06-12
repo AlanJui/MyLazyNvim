@@ -1,6 +1,4 @@
-local M = {}
-
-function M.setup()
+return function()
   local dap = require "dap"
 
   dap.adapters.nlua = function(callback, config)
@@ -19,5 +17,3 @@ function M.setup()
     },
   }
 end
-
-return M

@@ -16,10 +16,10 @@ vim.cmd('vnoremap <leader>y "*y') -- Yank content in OS's clipboard
 vim.cmd("nnoremap <Enter> o<ESC>") -- Insert New Line quickly
 
 -- Better viewing
--- keymap("n", "n", "nzzzv")
--- keymap("n", "N", "Nzzzv")
--- keymap("n", "g,", "g,zvzz")
--- keymap("n", "g;", "g;zvzz")
+keymap("n", "n", "nzzzv")
+keymap("n", "N", "Nzzzv")
+keymap("n", "g,", "g,zvzz")
+keymap("n", "g;", "g;zvzz")
 
 -- Better escape using jk in insert and terminal mode
 keymap("i", "jj", "<ESC>")
@@ -54,8 +54,8 @@ keymap("i", ".", ".<c-g>u")
 keymap("i", ";", ";<c-g>u")
 
 -- Better indent
--- keymap("v", "<", "<gv")
--- keymap("v", ">", ">gv")
+keymap("v", "<", "<gv")
+keymap("v", ">", ">gv")
 
 -- Paste over currently selected text without yanking it
 keymap("v", "p", '"_dP')
@@ -80,6 +80,11 @@ keymap("i", "<A-j>", "<Esc>:m .+1<CR>==gi")
 keymap("n", "<A-k>", ":m .-2<CR>==")
 keymap("v", "<A-k>", ":m '<-2<CR>gv=gv")
 keymap("i", "<A-k>", "<Esc>:m .-2<CR>==gi")
+
+-- Tab operations
+keymap("n", "gt", "<cmd>bn<CR>")
+keymap("n", "gT", "<cmd>bp<CR>")
+
 
 -- Toggle diff buffers
 keymap("n", "<leader>dft", "&diff ? ':windo diffoff<cr>' : ':windo diffthis<cr>'", { expr = true })

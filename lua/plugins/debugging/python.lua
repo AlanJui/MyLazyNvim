@@ -1,28 +1,23 @@
-local M = {}
-
-local function get_venv_python_path()
-  local workspace_folder = vim.fn.getcwd()
-
-  if vim.fn.executable(workspace_folder .. "/.venv/bin/python") then
-    return workspace_folder .. "/.venv/bin/python"
-  elseif vim.fn.executable(workspace_folder .. "/venv/bin/python") then
-    return workspace_folder .. "/venv/bin/python"
-  elseif vim.fn.executable(os.getenv("VIRTUAL_ENV") .. "/bin/python") then
-    return os.getenv("VIRTUAL_ENV" .. "/bin/python")
-  else
-    return "/usr/bin/python"
-  end
-end
-
-local venv_python_path = get_venv_python_path()
-local debugpy_python_path = vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/bin/python"
-
-function M.setup()
+return function()
   local dap = require "dap"
+
+  local function get_venv_python_path()
+    local workspace_folder = vim.fn.getcwd()
+
+    if vim.fn.executable(workspace_folder .. "/.venv/bin/python") then
+      return workspace_folder .. "/.venv/bin/python"
+    elseif vim.fn.executable(workspace_folder .. "/venv/bin/python") then
+      return workspace_folder .. "/venv/bin/python"
+    elseif vim.fn.executable(os.getenv("VIRTUAL_ENV") .. "/bin/python") then
+      return os.getenv("VIRTUAL_ENV" .. "/bin/python")
+    else
+      return "/usr/bin/python"
+    end
+  end
 
   dap.adapters.python = {
     type = "executable",
-    command = debugpy_python_path,
+    command = vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/bin/python",
     args = { "-m", "debugpy.adapter" },
   }
 
@@ -32,7 +27,7 @@ function M.setup()
       request = "launch",
       name = "Launch file",
       program = "${file}",
-      pythonPath = venv_python_path,
+      pythonPath = get_venv_python_path(),
     },
     {
       type = "python",
@@ -46,7 +41,7 @@ function M.setup()
       },
       console = "integratedTerminal",
       justMyCode = true,
-      pythonPath = venv_python_path,
+      pythonPath = get_venv_python_path(),
     },
     {
       type = "python",
@@ -59,9 +54,7 @@ function M.setup()
       },
       django = true,
       console = "integratedTerminal",
-      pythonPath = venv_python_path,
+      pythonPath = get_venv_python_path(),
     },
   }
 end
-
-return M
