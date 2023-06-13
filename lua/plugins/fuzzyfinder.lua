@@ -98,26 +98,29 @@ return {
         end,
         desc = "Find Files",
       },
-      {
-        "<leader>ff",
-        "<cmd>Telescope find_files find_command=rg,--ignore,--hidden,--files prompt_prefix=🔍<cr>",
-        desc = "Find Files (root dir)",
-      },
-      {
-        "<leader>fF",
-        function()
-          -- require("telescope.builtin").find_files({ cmd = false })
-          require("telescope.builtin").find_files({
-            cwd = false,
-            previewer = true,
-            -- layout_strategy = "vertical",
-            -- layout_config = {
-            --   width = 0.8,
-            -- },
-          })
-        end,
-        desc = "Find Files (cwd)",
-      },
+      { "<leader>ff", require("util").find_files, desc = "Find Files" },
+      { "<leader>fo", "<cmd>Telescope frecency theme=dropdown previewer=false<cr>", desc = "Recent" },
+      { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
+      -- {
+      --   "<leader>ff",
+      --   "<cmd>Telescope find_files find_command=rg,--ignore,--hidden,--files prompt_prefix=🔍<cr>",
+      --   desc = "Find Files (root dir)",
+      -- },
+      -- {
+      --   "<leader>fF",
+      --   function()
+      --     -- require("telescope.builtin").find_files({ cmd = false })
+      --     require("telescope.builtin").find_files({
+      --       cwd = false,
+      --       previewer = true,
+      --       -- layout_strategy = "vertical",
+      --       -- layout_config = {
+      --       --   width = 0.8,
+      --       -- },
+      --     })
+      --   end,
+      --   desc = "Find Files (cwd)",
+      -- },
       { "<leader>fB", "<cmd>Telescope file_browser<cr>", desc = "Browser" },
       { "<leader>fr", "<cmd>Telescope frecency theme=dropdown previewer=false<cr>", desc = "Frecency Files" },
       { "<leader>fR", "<cmd>Telescope oldfiles<cr>", desc = "Recent Files" },
@@ -150,6 +153,8 @@ return {
         end,
         desc = "Grep (cwd)",
       },
+      { "<leader>ss", "<cmd>Telescope luasnip<cr>", desc = "Snippets" },
+      -- { "<leader>sw", "<cmd>Telescope live_grep<cr>", desc = "Workspace" },
       {
         "<leader>sw",
         function()

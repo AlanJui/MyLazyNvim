@@ -56,10 +56,12 @@ return {
           -- telescope
           a = { "<cmd>Telescope telescope-alternate alternate_file<cr>", "Alternate file" },
           b = { "<cmd>Telescope buffers<cr>", "Switch buffers" },
+          B = { "<cmd>Telescope file_browser<cr>", "File browser" },
           h = { "<cmd>Telescope frecency<cr>", "Most (f)recently used files" },
           j = { "<cmd>Telescope current_buffer_fuzzy_find<cr>", "Fuzzy find current buffer" },
           m = { "<cmd>MarksListBuf<cr>", "Find Mark in buffer" },
           d = { "<cmd>Telescope diagnostics<cr>", "Find Diagnostics" },
+          f = { "<cmd>Telescope find_files<cr>", "Find Files" },
           r = { "<cmd>Telescope registers<cr>", "Find Registers" },
           s = { "<cmd>Telescope grep_string<cr>", "Grep text under cursor" },
           g = { "<cmd>lua require'telescope'.extensions.live_grep_args.live_grep_args({default_text=vim.fn.expand('<cword>')})<cr>", "Grep cursor word with args" },
@@ -76,6 +78,8 @@ return {
             M = { "<cmd>Telescope man_pages<cr>", "Man Pages" },
             S = { "<cmd>Telescope symbols<cr>", "Search symbols" },
             k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
+            o = { "<cmd>Telescope aerial<cr>", "Code Outline" },
+            s = { function() require("telescope.builtin").colorscheme({enable_preview = true}) end, "Colorscheme" },
           }
         },
         g = {
@@ -133,6 +137,9 @@ return {
           o = { [[<cmd>lua require('spectre').open()<CR>]], "Open spectre" },
         },
         s = {
+          name = "Search",
+        },
+        S = {
           name = "Session",
           -- session
           a = { "<cmd>SaveSession<cr>", "Add auto session" },
