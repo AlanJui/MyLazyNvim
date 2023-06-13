@@ -53,10 +53,11 @@ opt.writebackup = false --- Not needed
 opt.autoread = true
 
 -- Fold
-opt.foldenable = true --- Use spaces instead of tabs
+opt.foldcolumn = "1"
 opt.foldlevel = 99 --- Using ufo provider need a large value
 opt.foldlevelstart = 99 --- Expand all folds by default
-opt.foldcolumn = "0"
+opt.foldenable = true --- Use spaces instead of tabs
+opt.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
 
 -- Fix markdown indentation settings
 vim.g.markdown_recommended_style = 0
