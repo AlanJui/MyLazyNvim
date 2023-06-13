@@ -74,6 +74,9 @@ cmd([[autocmd BufWritePre * %s/\n\+\%$//e]])
 -------------------------------------------------------------
 -- My Options
 -------------------------------------------------------------
+-- copy/paste to system clipboard
+opt.clipboard = "unnamedplus"
+
 -- line numbers
 opt.relativenumber = true -- show relative line numbers
 opt.number = true -- shows absolute line number on cursor line (when relative number is on)

@@ -6,12 +6,12 @@ return {
       vim.list_extend(opts.ensure_installed, { "javascript", "typescript", "tsx" })
     end,
   },
-  {
-    "jose-elias-alvarez/null-ls.nvim",
-    opts = function(_, opts)
-      table.insert(opts.sources, require("typescript.extensions.null-ls.code-actions"))
-    end,
-  },
+  -- {
+  --   "jose-elias-alvarez/null-ls.nvim",
+  --   opts = function(_, opts)
+  --     table.insert(opts.sources, require("typescript.extensions.null-ls.code-actions"))
+  --   end,
+  -- },
   -- correctly setup lspconfig
   {
     "neovim/nvim-lspconfig",

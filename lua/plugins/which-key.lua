@@ -43,6 +43,9 @@ return {
         --   r = { "<Cmd>DBUIRenameBuffer<Cr>", "Rename buffer" },
         --   q = { "<Cmd>DBUILastQueryInfo<Cr>", "Last query info" },
         -- },
+        d = {
+          name = "Debug",
+        },
         f = {
           name = "Fuzzy finder",
           -- fzf.vim

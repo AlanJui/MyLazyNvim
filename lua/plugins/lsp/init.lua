@@ -4,47 +4,37 @@ return {
     "neovim/nvim-lspconfig",
     event = "BufReadPre",
     dependencies = {
-      { "folke/neoconf.nvim", cmd = "Neoconf", config = true },
-      { "folke/neodev.nvim", opts = { experimental = { pathStrict = true } } },
+      { "folke/neoconf.nvim",      cmd = "Neoconf", config = true },
+      {
+        "folke/neodev.nvim",
+        opts = {
+          library = {
+            plugins = { "neotest", "nvim-dap-ui" },
+            types = true
+          },
+        },
+      },
+      { "j-hui/fidget.nvim",       config = true,   tag = "legacy" },
+      { "smjonas/inc-rename.nvim", config = true },
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
-      "haringsrob/nvim_context_vt",
-      { "simrat39/inlay-hints.nvim", config = true },
       {
         "hrsh7th/cmp-nvim-lsp",
         cond = function()
           return require("util").has("nvim-cmp")
         end,
       },
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-nvim-lsp-signature-help",
       {
         "folke/trouble.nvim",
         cmd = { "TroubleToggle", "Trouble" },
         opts = { use_diagnostic_signs = true },
       },
     },
-    ---@class PluginLspOpts
     opts = {
-      -- options for vim.diagnostic.config()
-      diagnostics = {
-        underline = true,
-        update_in_insert = false,
-        virtual_text = { spacing = 4, prefix = "●" },
-        severity_sort = true,
-      },
-      -- Automatically format on save
-      autoformat = true,
-      -- options for vim.lsp.buf.format
-      -- `bufnr` and `filter` is handled by the LazyVim formatter,
-      -- but can be also overriden when specified
-      format = {
-        formatting_options = nil,
-        timeout_ms = nil,
-      },
-      -- LSP Server Settings
-      ---@type lspconfig.options
       servers = {
         lua_ls = {
-          -- mason = false, -- set to false if you don't want this server to be installed with mason
           settings = {
             Lua = {
               workspace = {
@@ -53,24 +43,14 @@ return {
               completion = {
                 callSnippet = "Replace",
               },
-            },
-          },
-        },
-        gopls = {
-          settings = {
-            gopls = {
-              hints = {
-                assignVariableTypes = true,
-                compositeLiteralFields = true,
-                compositeLiteralTypes = true,
-                constantValues = true,
-                functionTypeParameters = true,
-                parameterNames = true,
-                rangeVariableTypes = true,
+              telemetry = { enable = false },
+              hint = {
+                enable = false,
               },
             },
           },
         },
+        dockerls = {},
         yamlls = {
           schemastore = {
             enable = true,
@@ -85,7 +65,6 @@ return {
         },
         bashls = {},
         cssls = {},
-        dockerls = {},
         html = {},
         marksman = {},
         jsonls = {},
@@ -95,72 +74,70 @@ return {
         vimls = {},
         vuels = {},
       },
-      -- you can do any additional lsp server setup here
-      -- return true if you don't want this server to be setup with lspconfig
-      ---@type table<string, fun(server:string, opts:_.lspconfig.options):boolean?>
       setup = {
-        -- example to setup with typescript.nvim
-        -- tsserver = function(_, opts)
-        --   require("typescript").setup({ server = opts })
-        --   return true
-        -- end,
-        -- Specify * to use this function as a fallback for any server
-        -- ["*"] = function(server, opts) end,
+        lua_ls = function(_, _)
+          -- example to setup with typescript.nvim
+          -- tsserver = function(_, opts)
+          --   require("typescript").setup({ server = opts })
+          --   return true
+          -- end,
+          -- Specify * to use this function as a fallback for any server
+          -- ["*"] = function(server, opts) end,
+          local lsp_utils = require "plugins.lsp.utils"
+          lsp_utils.on_attach(function(client, buffer)
+            -- stylua: ignore
+            if client.name == "lua_ls" then
+              vim.keymap.set("n", "<leader>dX", function() require("osv").run_this() end,
+                { buffer = buffer, desc = "OSV Run" })
+              vim.keymap.set("n", "<leader>dL", function() require("osv").launch({ port = 8086 }) end,
+                { buffer = buffer, desc = "OSV Launch" })
+            end
+          end)
+        end,
       },
     },
-    ---@param opts PluginLspOpts
     config = function(plugin, opts)
-      -- setup autoformat
-      require("plugins.lsp.format").autoformat = opts.autoformat
-      -- setup formatting and keymaps
-      require("util").on_attach(function(client, buffer)
-        require("plugins.lsp.format").on_attach(client, buffer)
-        require("plugins.lsp.keymaps").on_attach(client, buffer)
-      end)
+      require("plugins.lsp.servers").setup(plugin, opts)
+    end,
+  },
 
-      -- diagnostics
-      for name, icon in pairs(require("config.icons").diagnostics) do
-        name = "DiagnosticSign" .. name
-        vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "" })
-      end
-      vim.diagnostic.config(opts.diagnostics)
-
-      local servers = opts.servers
-      local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
-
-      local function setup(server)
-        local server_opts = servers[server] or {}
-        server_opts.capabilities = capabilities
-        if opts.setup[server] then
-          if opts.setup[server](server, server_opts) then
-            return
-          end
-        elseif opts.setup["*"] then
-          if opts.setup["*"](server, server_opts) then
-            return
-          end
-        end
-        require("lspconfig")[server].setup(server_opts)
-      end
-
-      local mlsp = require("mason-lspconfig")
-      local available = mlsp.get_available_servers()
-
-      local ensure_installed = {} ---@type string[]
-      for server, server_opts in pairs(servers) do
-        if server_opts then
-          server_opts = server_opts == true and {} or server_opts
-          -- run manual setup if mason=false or if this is a server that cannot be installed with mason-lspconfig
-          if server_opts.mason == false or not vim.tbl_contains(available, server) then
-            setup(server)
-          else
-            ensure_installed[#ensure_installed + 1] = server
-          end
+  -- cmdline tools and lsp servers
+  {
+    "williamboman/mason.nvim",
+    cmd = "Mason",
+    keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } },
+    opts = {
+      ui = { border = "rounded" },
+      ensure_installed = {
+        "stylua",     -- Lua Script
+        "shellcheck", -- Shell Script
+        "shfmt",
+        "pylint",     -- Python
+        "isort",
+        "mypy",
+        "pydocstyle",
+        "flake8",
+        "djlint",
+        "autopep8",
+        "prettier",     -- Web Tools
+        "golangci-lint",
+        "markdownlint", -- Markdown
+        "jq",           -- JSON
+        "eslint_d",     -- javascript
+        "yamllint",
+        "debugpy",      -- DAP
+        "js-debug-adapter",
+      },
+    },
+    config = function(_, opts)
+      require("mason").setup()
+      local mr = require("mason-registry")
+      for _, tool in ipairs(opts.ensure_installed) do
+        local p = mr.get_package(tool)
+        if not p:is_installed() then
+          p:install()
         end
       end
-
-      require("mason-lspconfig").setup({ ensure_installed = ensure_installed })
-      require("mason-lspconfig").setup_handlers({ setup })
     end,
   },
 
@@ -169,31 +146,13 @@ return {
     "jose-elias-alvarez/null-ls.nvim",
     event = "BufReadPre",
     dependencies = { "mason.nvim" },
-    opts = function()
+    config = function()
       local nls = require("null-ls")
-      return {
+      nls.setup {
         border = "rounded",
         sources = {
           -- formatting
           nls.builtins.formatting.stylua,
-          -- nls.builtins.formatting.stylua.with({
-          --   extra_args = {
-          --     "--column-limit",
-          --     "120",
-          --     "--line_endings",
-          --     "Unix",
-          --     "--indent-type",
-          --     "Spaces",
-          --     "--indent-width",
-          --     "2",
-          --     "--quote_style",
-          --     "AutoPreferDouble",
-          --     "--call_parentheses",
-          --     "None",
-          --     "--collapse_simple_statement",
-          --     "None",
-          --   },
-          -- }),
           nls.builtins.diagnostics.pylint, -- Python
           nls.builtins.diagnostics.mypy.with({ extra_args = { "--config-file", "pyproject.toml" } }),
           nls.builtins.diagnostics.pydocstyle.with({ extra_args = { "--config=$ROOT/setup.cfg" } }),
@@ -202,7 +161,7 @@ return {
           nls.builtins.formatting.djhtml,
           nls.builtins.formatting.markdown_toc, -- Markdown
           nls.builtins.formatting.markdownlint,
-          nls.builtins.diagnostics.eslint_d, -- Web Tools
+          nls.builtins.diagnostics.eslint_d,    -- Web Tools
           nls.builtins.diagnostics.stylelint,
           nls.builtins.formatting.prettier.with({
             extra_args = { "--single-quote", "false" },
@@ -244,44 +203,33 @@ return {
     end,
   },
 
-  -- cmdline tools and lsp servers
+  -- VS Code like winbar that use nvim-navic in order to get LSP context from your language server
   {
-    "williamboman/mason.nvim",
-    cmd = "Mason",
-    keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } },
-    opts = {
-      ui = { border = "rounded" },
-      ensure_installed = {
-        "stylua", -- Lua Script
-        "shellcheck", -- Shell Script
-        "shfmt",
-        "pylint", -- Python
-        "isort",
-        "mypy",
-        "pydocstyle",
-        "flake8",
-        "djlint",
-        "autopep8",
-        "prettier", -- Web Tools
-        "golangci-lint",
-        "markdownlint", -- Markdown
-        "jq", -- JSON
-        "eslint_d", -- javascript
-        "yamllint",
-        "debugpy", -- DAP
-        "js-debug-adapter",
-      },
+    "utilyre/barbecue.nvim",
+    event = "VeryLazy",
+    dependencies = {
+      "neovim/nvim-lspconfig",
+      "SmiteshP/nvim-navic",
+      "nvim-tree/nvim-web-devicons",
     },
-    ---@param opts MasonSettings | {ensure_installed: string[]}
-    config = function(plugin, opts)
-      require("mason").setup(opts)
-      local mr = require("mason-registry")
-      for _, tool in ipairs(opts.ensure_installed) do
-        local p = mr.get_package(tool)
-        if not p:is_installed() then
-          p:install()
-        end
-      end
-    end,
+    config = true,
+  },
+
+  -- Tool for dsiplaying diagnostics, references, telescope results, quickfix and loclist items
+  {
+    "folke/trouble.nvim",
+    cmd = { "TroubleToggle", "Trouble" },
+    opts = { use_diagnostic_signs = true },
+    keys = {
+      { "<leader>cd", "<cmd>TroubleToggle document_diagnostics<cr>",  desc = "Document Diagnostics" },
+      { "<leader>cD", "<cmd>TroubleToggle workspace_diagnostics<cr>", desc = "Workspace Diagnostics" },
+    },
+  },
+
+  -- LSP enhancements for neovim
+  {
+    "glepnir/lspsaga.nvim",
+    event = "VeryLazy",
+    config = true,
   },
 }
