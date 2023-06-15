@@ -4,17 +4,17 @@ return {
     "neovim/nvim-lspconfig",
     event = "BufReadPre",
     dependencies = {
-      { "folke/neoconf.nvim",      cmd = "Neoconf", config = true },
+      { "folke/neoconf.nvim", cmd = "Neoconf", config = true },
       {
         "folke/neodev.nvim",
         opts = {
           library = {
             plugins = { "neotest", "nvim-dap-ui" },
-            types = true
+            types = true,
           },
         },
       },
-      { "j-hui/fidget.nvim",       config = true,   tag = "legacy" },
+      { "j-hui/fidget.nvim", config = true, tag = "legacy" },
       { "smjonas/inc-rename.nvim", config = true },
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
@@ -83,7 +83,7 @@ return {
           -- end,
           -- Specify * to use this function as a fallback for any server
           -- ["*"] = function(server, opts) end,
-          local lsp_utils = require "plugins.lsp.utils"
+          local lsp_utils = require("plugins.lsp.utils")
           lsp_utils.on_attach(function(client, buffer)
             -- stylua: ignore
             if client.name == "lua_ls" then
@@ -109,23 +109,23 @@ return {
     opts = {
       ui = { border = "rounded" },
       ensure_installed = {
-        "stylua",     -- Lua Script
+        "stylua", -- Lua Script
         "shellcheck", -- Shell Script
         "shfmt",
-        "pylint",     -- Python
+        "pylint", -- Python
         "isort",
         "mypy",
         "pydocstyle",
         "flake8",
         "djlint",
         "autopep8",
-        "prettier",     -- Web Tools
+        "prettier", -- Web Tools
         "golangci-lint",
         "markdownlint", -- Markdown
-        "jq",           -- JSON
-        "eslint_d",     -- javascript
+        "jq", -- JSON
+        "eslint_d", -- javascript
         "yamllint",
-        "debugpy",      -- DAP
+        "debugpy", -- DAP
         "js-debug-adapter",
       },
     },
@@ -148,7 +148,7 @@ return {
     dependencies = { "mason.nvim" },
     config = function()
       local nls = require("null-ls")
-      nls.setup {
+      nls.setup({
         border = "rounded",
         sources = {
           -- formatting
@@ -161,7 +161,7 @@ return {
           nls.builtins.formatting.djhtml,
           nls.builtins.formatting.markdown_toc, -- Markdown
           nls.builtins.formatting.markdownlint,
-          nls.builtins.diagnostics.eslint_d,    -- Web Tools
+          nls.builtins.diagnostics.eslint_d, -- Web Tools
           nls.builtins.diagnostics.stylelint,
           nls.builtins.formatting.prettier.with({
             extra_args = { "--single-quote", "false" },
@@ -199,7 +199,7 @@ return {
           nls.builtins.code_actions.refactoring,
           nls.builtins.code_actions.shellcheck,
         },
-      }
+      })
     end,
   },
 
@@ -221,7 +221,7 @@ return {
     cmd = { "TroubleToggle", "Trouble" },
     opts = { use_diagnostic_signs = true },
     keys = {
-      { "<leader>cd", "<cmd>TroubleToggle document_diagnostics<cr>",  desc = "Document Diagnostics" },
+      { "<leader>cd", "<cmd>TroubleToggle document_diagnostics<cr>", desc = "Document Diagnostics" },
       { "<leader>cD", "<cmd>TroubleToggle workspace_diagnostics<cr>", desc = "Workspace Diagnostics" },
     },
   },

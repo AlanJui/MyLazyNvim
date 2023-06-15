@@ -1,4 +1,5 @@
 return {
+  -- UFO folding
   {
     "kevinhwang91/nvim-ufo",
     dependencies = {
@@ -10,10 +11,7 @@ return {
           require("statuscol").setup({
             relculright = true,
             segments = {
-              {
-                text = { builtin.foldfunc },
-                click = "v:lua.ScFa",
-              },
+              { text = { builtin.foldfunc }, click = "v:lua.ScFa" },
               { text = { "%s" }, click = "v:lua.ScSa" },
               { text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" },
             },
@@ -41,34 +39,10 @@ return {
         require("ufo").closeAllFolds()
       end)
     end,
-    --stylua: ignore
-    keys = {
-      { "zc" },
-      { "zo" },
-      { "zC" },
-      { "zO" },
-      { "za" },
-      { "zA" },
-      { "zr", function() require("ufo").openFoldsExceptKinds() end, desc = "Open Folds Except Kinds", },
-      { "zR", function() require("ufo").openAllFolds() end, desc = "Open All Folds", },
-      { "zM", function() require("ufo").closeAllFolds() end, desc = "Close All Folds", },
-      { "zm", function() require("ufo").closeFoldsWith() end, desc = "Close Folds With", },
-      { "zp", function()
-        local winid = require('ufo').peekFoldedLinesUnderCursor()
-        if not winid then
-          vim.lsp.buf.hover()
-        end
-      end, desc = "Peek Fold", },
-    },
   },
   -- Folding preview, by default h and l keys are used.
   -- On first press of h key, when cursor is on a closed fold, the preview will be shown.
   -- On second press the preview will be closed and fold will be opened.
   -- When preview is opened, the l key will close it and open fold. In all other cases these keys will work as usual.
-  {
-    "anuvyklack/fold-preview.nvim",
-    dependencies = "anuvyklack/keymap-amend.nvim",
-    config = true
-  },
-
+  { "anuvyklack/fold-preview.nvim", dependencies = "anuvyklack/keymap-amend.nvim", config = true },
 }
