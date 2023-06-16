@@ -32,8 +32,24 @@ return {
         o = { "<cmd>AerialToggle<cr>", "Toggle code outline window" }, -- aerial.nvim plugin
         b = {
           name = "Buffer/Bot",
-          c = { function() require("util.bot").cht() end, "Cheatsheet(cht.sh)", },
-          s = { function() require("util.bot").stack_overflow() end, "Stack Overflow", },
+          c = {
+            function()
+              require("util.bot").cht()
+            end,
+            "Cheatsheet(cht.sh)",
+          },
+          S = {
+            function()
+              require("util.bot").stack_overflow()
+            end,
+            "Stack Overflow",
+          },
+        },
+        c = {
+          name = "Code",
+          t = {
+            name = "Splitting/Joining blocks of code",
+          },
         },
         -- Database
         -- D = {
@@ -64,7 +80,10 @@ return {
           f = { "<cmd>Telescope find_files<cr>", "Find Files" },
           r = { "<cmd>Telescope registers<cr>", "Find Registers" },
           s = { "<cmd>Telescope grep_string<cr>", "Grep text under cursor" },
-          g = { "<cmd>lua require'telescope'.extensions.live_grep_args.live_grep_args({default_text=vim.fn.expand('<cword>')})<cr>", "Grep cursor word with args" },
+          g = {
+            "<cmd>lua require'telescope'.extensions.live_grep_args.live_grep_args({default_text=vim.fn.expand('<cword>')})<cr>",
+            "Grep cursor word with args",
+          },
           t = { "<cmd>lua require'telescope'.extensions.live_grep_args.live_grep_args()<cr>", "Grep text with args" },
           G = { "<cmd>Telescope live_grep<cr>", "Grep text" },
           p = { "<cmd>Telescope lazy<cr>", "List lazy plugins info" },
@@ -79,8 +98,13 @@ return {
             S = { "<cmd>Telescope symbols<cr>", "Search symbols" },
             k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
             o = { "<cmd>Telescope aerial<cr>", "Code Outline" },
-            s = { function() require("telescope.builtin").colorscheme({enable_preview = true}) end, "Colorscheme" },
-          }
+            s = {
+              function()
+                require("telescope.builtin").colorscheme({ enable_preview = true })
+              end,
+              "Colorscheme",
+            },
+          },
         },
         g = {
           name = "Git",
@@ -160,11 +184,36 @@ return {
           u = { "<cmd>UrlView buffer<cr>", "Find URL and open" },
           l = { "<cmd>UrlView buffer action=clipboard<cr>", "Copy URL" },
           -- toggle options
-          f = { function() require("plugins.lsp.format").toggle() end, "Toggle format on Save", },
-          w = { function() Util.toggle("wrap") end, "Toggle Word Wrap", },
-          s = { function() Util.toggle("spell") end, "Toggle Spelling", },
-          n = { function() Util.toggle("relativenumber") end, "Toggle Line Numbers", },
-          d = { function() Util.toggle_diagnostics() end, "Toggle Diagnostics", },
+          f = {
+            function()
+              require("plugins.lsp.format").toggle()
+            end,
+            "Toggle format on Save",
+          },
+          w = {
+            function()
+              Util.toggle("wrap")
+            end,
+            "Toggle Word Wrap",
+          },
+          s = {
+            function()
+              Util.toggle("spell")
+            end,
+            "Toggle Spelling",
+          },
+          n = {
+            function()
+              Util.toggle("relativenumber")
+            end,
+            "Toggle Line Numbers",
+          },
+          d = {
+            function()
+              Util.toggle_diagnostics()
+            end,
+            "Toggle Diagnostics",
+          },
         },
         w = {
           name = "Window/Word",

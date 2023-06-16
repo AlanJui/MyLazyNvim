@@ -21,4 +21,16 @@ return {
   },
   { "ellisonleao/gruvbox.nvim", lazy = false, config = true },
   { "catppuccin/nvim", lazy = false, name = "catppuccin" },
+  {
+    "bluz71/vim-nightfly-colors",
+    name = "nightfly",
+    lazy = false,
+    priority = 1000,
+  },
+  {
+    "bluz71/vim-moonfly-colors",
+    name = "moonfly",
+    lazy = false,
+    priority = 1000,
+  },
 }
