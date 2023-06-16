@@ -50,6 +50,13 @@ return {
           t = {
             name = "Splitting/Joining blocks of code",
           },
+          o = {
+            name = "Outline",
+            t = { "<cmd>AerialToggle<cr>", "Toggle outline window" },
+            o = { "<cmd>AerialOpen<cr>", "Open outline window" },
+            n = { "<cmd>AerialNext<CR>", "Jump forwards 1 symbols" },
+            p = { "<cmd>AerialPrev<CR>", "Jump backwards 1 symbols" },
+          },
         },
         -- Database
         -- D = {

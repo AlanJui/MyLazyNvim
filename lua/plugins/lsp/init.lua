@@ -39,6 +39,13 @@ return {
             Lua = {
               workspace = {
                 checkThirdParty = false,
+                library = {
+                  [vim.fn.stdpath("config") .. "/lua"] = true,
+                  [vim.fn.expand("$VIMRUNTIME/lua")] = true,
+                },
+              },
+              diagnostics = {
+                globals = { "vim", "hs" },
               },
               completion = {
                 callSnippet = "Replace",
