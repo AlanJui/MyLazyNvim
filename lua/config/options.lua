@@ -1,3 +1,10 @@
+vim.g.loaded_python2_provider = 0
+vim.g.loaded_python3_provider = 1
+vim.g.python3_host_prog = os.getenv("VIRTUAL_ENV") .. "/bin/python"
+vim.g.node_host_prog = os.getenv("HOME") .. "/n/lib/node_modules/neovim/bin/cli.js"
+vim.g.loaded_ruby_provider = 0
+vim.g.loaded_perl_provider = 0
+
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
@@ -57,6 +64,7 @@ opt.foldcolumn = "1"
 opt.foldlevel = 99 --- Using ufo provider need a large value
 opt.foldlevelstart = 99 --- Expand all folds by default
 opt.foldenable = true --- Use spaces instead of tabs
+---@diagnostic disable-next-line: assign-type-mismatch
 opt.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
 
 -- Fix markdown indentation settings

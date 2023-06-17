@@ -1,7 +1,7 @@
 local M = {}
 
-local lsp_utils = require "plugins.lsp.utils"
-local icons = require "config.icons"
+local lsp_utils = require("plugins.lsp.utils")
+local icons = require("config.icons")
 
 local function lsp_init()
   local signs = {
@@ -59,6 +59,7 @@ local function lsp_init()
 end
 
 function M.setup(_, opts)
+  -- 自 lsp_utils 模組，取用 on_attach function , 進行 LSP Client 的 on_attach 設定
   lsp_utils.on_attach(function(client, buffer)
     require("plugins.lsp.format").on_attach(client, buffer)
     require("plugins.lsp.keymaps").on_attach(client, buffer)
@@ -66,24 +67,31 @@ function M.setup(_, opts)
 
   lsp_init() -- diagnostics, handlers
 
+  -- 取出全部需設定之 LSP servers configuration
   local servers = opts.servers
-  require("mason-lspconfig").setup { ensure_installed = vim.tbl_keys(servers) }
-  require("mason-lspconfig").setup_handlers {
-    function(server)
-      local server_opts = servers[server] or {}
+  require("mason-lspconfig").setup({ ensure_installed = vim.tbl_keys(servers) })
+  require("mason-lspconfig").setup_handlers({
+    function(server_name)
+      -- 取出單一 LSP server configuration
+      local server_opts = servers[server_name] or {}
+      -- 設定 LSP server capabilities
       server_opts.capabilities = lsp_utils.capabilities()
-      if opts.setup[server] then
-        if opts.setup[server](server, server_opts) then
+      ------------------------------------------------------------
+      -- 若 LSP Server 有設定 setup function, 則依 function 執行設定作業；
+      -- 否則使用 lspconfig 內建之 setup function
+      ------------------------------------------------------------
+      if opts.setup[server_name] then
+        if opts.setup[server_name](server_name, server_opts) then
           return
         end
       elseif opts.setup["*"] then
-        if opts.setup["*"](server, server_opts) then
+        if opts.setup["*"](server_name, server_opts) then
           return
         end
       end
-      require("lspconfig")[server].setup(server_opts)
+      require("lspconfig")[server_name].setup(server_opts)
     end,
-  }
+  })
 end
 
 return M

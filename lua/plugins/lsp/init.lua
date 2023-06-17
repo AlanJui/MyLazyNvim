@@ -57,6 +57,26 @@ return {
             },
           },
         },
+        pyright = {
+          settings = {
+            python = {
+              analysis = {
+                typeCheckingMode = "off",
+                autoSearchPaths = true,
+                useLibraryCodeForTypes = true,
+                diagnosticMode = "workspace",
+                stubPath = vim.fn.stdpath("config") .. "/stubs",
+              },
+            },
+          },
+        },
+        tsserver = {
+          settings = {
+            typescript = {
+              tsdk = vim.fn.stdpath("config") .. "/typescript",
+            },
+          },
+        },
         dockerls = {},
         yamlls = {
           schemastore = {
@@ -82,14 +102,14 @@ return {
         vuels = {},
       },
       setup = {
-        lua_ls = function(_, _)
-          -- example to setup with typescript.nvim
-          -- tsserver = function(_, opts)
-          --   require("typescript").setup({ server = opts })
-          --   return true
-          -- end,
-          -- Specify * to use this function as a fallback for any server
-          -- ["*"] = function(server, opts) end,
+        -- example to setup with typescript.nvim
+        tsserver = function(_, opts)
+          require("typescript").setup({ server = opts })
+          return true
+        end,
+        -- Specify * to use this function as a fallback for any server
+        -- ["*"] = function(server, opts) end,
+        lua_ls = function(_, opts)
           local lsp_utils = require("plugins.lsp.utils")
           lsp_utils.on_attach(function(client, buffer)
             -- stylua: ignore
