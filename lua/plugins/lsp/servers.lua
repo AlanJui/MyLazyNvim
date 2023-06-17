@@ -80,15 +80,22 @@ function M.setup(_, opts)
       -- 若 LSP Server 有設定 setup function, 則依 function 執行設定作業；
       -- 否則使用 lspconfig 內建之 setup function
       ------------------------------------------------------------
+      -- 若此 server_name 存在特定的 setup function ，
       if opts.setup[server_name] then
+        -- 則依其 setup function 執行設定作業；其設定結果若成功，則結束此 function
         if opts.setup[server_name](server_name, server_opts) then
           return
         end
+      -- 若此 server_name 不存在特定的 setup function ，
       elseif opts.setup["*"] then
+        -- 則依 mason-lspconfig 內建之 setup function 執行設定作業；
+        -- 其設定結果若成功，則結束此 function
         if opts.setup["*"](server_name, server_opts) then
           return
         end
       end
+      -- 若此 server_name 不存在特定的 setup function ；或
+      -- 其設定結果若失敗，則使用 lspconfig 內建之 setup function
       require("lspconfig")[server_name].setup(server_opts)
     end,
   })
