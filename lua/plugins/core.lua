@@ -114,10 +114,25 @@ return {
         bind_to_cwd = false,
         follow_current_file = true,
       },
+      commands = {
+        child_or_open = function(state)
+          local node = state.tree:get_node()
+          if node.type == "directory" or node:has_children() then
+            if not node:is_expanded() then
+              state.commands.toggle_node(state)
+            else -- if expanded and has children, select the next child
+              require("neo-tree.ui.render").focus_node(state, node:get_child_ids()[1])
+            end
+          else -- if not a directory just open it
+            state.commands.open(state)
+          end
+        end,
+      },
       window = {
         mappings = {
           ["<space>"] = "none",
           ["/"] = "noop",
+          ["l"] = "child_or_open",
           ["o"] = "open",
           ["e"] = function()
             vim.api.nvim_exec("Neotree focus filesystem left", true)
@@ -146,27 +161,27 @@ return {
     },
   },
 }
-  -- -- terminal toggle
-  -- {
-  --   "akinsho/toggleterm.nvim",
-  --   keys = { [[<C-\>]] },
-  --   cmd = { "ToggleTerm", "TermExec" },
-  --   opts = {
-  --     size = 20,
-  --     hide_numbers = true,
-  --     open_mapping = [[<C-\>]],
-  --     shade_filetypes = {},
-  --     shade_terminals = false,
-  --     shading_factor = 0.3,
-  --     start_in_insert = true,
-  --     persist_size = true,
-  --     direction = "float",
-  --     winbar = {
-  --       enabled = false,
-  --       name_formatter = function(term)
-  --         return term.name
-  --       end,
-  --     },
-  --   },
-  -- },
-  --
+-- -- terminal toggle
+-- {
+--   "akinsho/toggleterm.nvim",
+--   keys = { [[<C-\>]] },
+--   cmd = { "ToggleTerm", "TermExec" },
+--   opts = {
+--     size = 20,
+--     hide_numbers = true,
+--     open_mapping = [[<C-\>]],
+--     shade_filetypes = {},
+--     shade_terminals = false,
+--     shading_factor = 0.3,
+--     start_in_insert = true,
+--     persist_size = true,
+--     direction = "float",
+--     winbar = {
+--       enabled = false,
+--       name_formatter = function(term)
+--         return term.name
+--       end,
+--     },
+--   },
+-- },
+--
