@@ -23,15 +23,29 @@ return {
       local g_opts = { mode = "n", prefix = "g" }
 
       local normal_keymap = {
+        -- Top Menu
         -- ['<leader>'] = {'<cmd>GitFiles<cr>', 'find git files'},
-        -- ['1'] = {':normal "lyy"lpwv$r=^"lyyk"lP<cr>', 'mark ======'},
-        q = { ":q!<cr>", "Quit without saving" },
-        Q = { ":qa!<cr>", "Quit all windows without saving" },
+        [" "] = { ":Telescope find_files<CR>", "Find files" },
+        [","] = { ":Telescope buffers<CR>", "Show buffers" },
+        -- Actions
+        a = {
+          name = "Actions",
+          h = { ":let @/ = ''<CR>", "remove search highlight" },
+          f = { ":set filetype=htmldjango<CR>", "set file type to django template" },
+          F = { ":set filetype=html<CR>", "set file type to HTML" },
+          n = { ":set nonumber!<CR>", "on/off line-numbers" },
+          N = { ":set norelativenumber!<CR>", "on/off relative line-numbers" },
+          w = { ":set wrap!<CR>", "on/off line wrap" },
+          -- Editing Tools
+          t = { "<cmd>AerialToggle<cr>", "Toggle code outline window" }, -- aerial.nvim plugin
+          T = { "<cmd>TSJToggle<CR>", "Split/Join Tree Node" },
+        },
         k = { "<Plug>DashSearch", "Search word in Dash" }, -- dash.vim plugin
         L = { "<cmd>Lazy<cr>", "open lazy.nvim plugins window" },
-        o = { "<cmd>AerialToggle<cr>", "Toggle code outline window" }, -- aerial.nvim plugin
         b = {
           name = "Buffer/Bot",
+          q = { ":q!<cr>", "Quit without saving" },
+          Q = { ":qa!<cr>", "Quit all windows without saving" },
           c = {
             function()
               require("util.bot").cht()
@@ -58,25 +72,12 @@ return {
             p = { "<cmd>AerialPrev<CR>", "Jump backwards 1 symbols" },
           },
         },
-        -- Database
-        -- D = {
-        --   name = "Database",
-        --   u = { "<Cmd>DBUIToggle<Cr>", "Toggle UI" },
-        --   f = { "<Cmd>DBUIFindBuffer<Cr>", "Find buffer" },
-        --   r = { "<Cmd>DBUIRenameBuffer<Cr>", "Rename buffer" },
-        --   q = { "<Cmd>DBUILastQueryInfo<Cr>", "Last query info" },
-        -- },
         d = {
           name = "Debug",
         },
         f = {
-          name = "Fuzzy finder",
-          -- fzf.vim
-          -- b = {'<cmd>Buffers<cr>', 'find buffers'},
-          -- o = {'<cmd>History<cr>', 'find old history'},
-          -- g = { "<cmd>GFiles<cr>", "Fzf find git files" },
-          -- j = { "<cmd>Files<cr>", "Fzf find files" },
           -- telescope
+          name = "Fuzzy finder",
           a = { "<cmd>Telescope telescope-alternate alternate_file<cr>", "Alternate file" },
           b = { "<cmd>Telescope buffers<cr>", "Switch buffers" },
           B = { "<cmd>Telescope file_browser<cr>", "File browser" },
@@ -157,8 +158,8 @@ return {
         },
         r = {
           name = "Run Code",
-          p = { name = "+Python" },
-          d = { name = "+Django" },
+          p = { name = "Python" },
+          d = { name = "Django" },
         },
         R = {
           name = "Replace",
@@ -186,10 +187,7 @@ return {
           name = "Utilities",
         },
         U = {
-          name = "Url view/Toggle option",
-          -- urlview
-          u = { "<cmd>UrlView buffer<cr>", "Find URL and open" },
-          l = { "<cmd>UrlView buffer action=clipboard<cr>", "Copy URL" },
+          name = "Toggle option",
           -- toggle options
           f = {
             function()

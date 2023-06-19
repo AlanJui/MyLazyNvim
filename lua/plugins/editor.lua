@@ -31,7 +31,7 @@ return {
     "ggandor/flit.nvim",
     keys = function()
       local ret = {}
-      for _, key in ipairs { "f", "F", "t", "T" } do
+      for _, key in ipairs({ "f", "F", "t", "T" }) do
         ret[#ret + 1] = { key, mode = { "n", "x", "o" }, desc = key }
       end
       return ret
@@ -45,7 +45,7 @@ return {
       safe_labels = {},
     },
     config = function(_, opts)
-      local leap = require "leap"
+      local leap = require("leap")
       for k, v in pairs(opts) do
         leap.opts[k] = v
       end
@@ -56,8 +56,8 @@ return {
       vim.keymap.del({ "x", "o", "n" }, "s")
       vim.keymap.del({ "x", "o", "n" }, "S")
       -- Add custome key mapping `zj/zk`
-      vim.keymap.set('n', '<leader>jj', '<Plug>(leap-forward)', {})
-      vim.keymap.set('n', '<leader>jk', '<Plug>(leap-backward)', {})
+      -- vim.keymap.set('n', '<leader>jj', '<Plug>(leap-forward)', {})
+      -- vim.keymap.set('n', '<leader>jk', '<Plug>(leap-backward)', {})
     end,
   },
   -- preview markdown on your modern browser with synchronised scrolling
@@ -133,7 +133,7 @@ return {
         autoresize = true,
         signcolumn = false,
         number = false,
-        compatible_filetrees = {'nvimtree', 'neo-tree'}
+        compatible_filetrees = { "nvimtree", "neo-tree" },
       })
     end,
   },

@@ -127,17 +127,26 @@ return {
             state.commands.open(state)
           end
         end,
+        parent_or_close = function(state)
+          local node = state.tree:get_node()
+          if (node.type == "directory" or node:has_children()) and node:is_expanded() then
+            state.commands.toggle_node(state)
+          else
+            require("neo-tree.ui.renderer").focus_node(state, node:get_parent_id())
+          end
+        end,
       },
       window = {
         mappings = {
           ["<space>"] = "none",
           ["/"] = "noop",
+          ["h"] = "parent_or_close",
           ["l"] = "child_or_open",
           ["o"] = "open",
           ["e"] = function()
             vim.api.nvim_exec("Neotree focus filesystem left", true)
           end,
-          ["b"] = function()
+          ["B"] = function()
             vim.api.nvim_exec("Neotree focus buffers left", true)
           end,
           -- ["g"] = function() vim.api.nvim_exec("Neotree focus git_status left",true) end,
@@ -161,27 +170,3 @@ return {
     },
   },
 }
--- -- terminal toggle
--- {
---   "akinsho/toggleterm.nvim",
---   keys = { [[<C-\>]] },
---   cmd = { "ToggleTerm", "TermExec" },
---   opts = {
---     size = 20,
---     hide_numbers = true,
---     open_mapping = [[<C-\>]],
---     shade_filetypes = {},
---     shade_terminals = false,
---     shading_factor = 0.3,
---     start_in_insert = true,
---     persist_size = true,
---     direction = "float",
---     winbar = {
---       enabled = false,
---       name_formatter = function(term)
---         return term.name
---       end,
---     },
---   },
--- },
---

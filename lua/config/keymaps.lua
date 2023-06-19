@@ -42,11 +42,11 @@ keymap("n", "<leader><tab>", "<cmd>tabnext<cr>")
 keymap("n", "_", [[<Cmd>sp<CR>]])
 keymap("n", "<bar>", [[<Cmd>vsp<CR>]])
 
--- Resize window using <shift> arrow keys
-keymap("n", "<A-Up>", "<cmd>resize +2<CR>")
-keymap("n", "<A-Down>", "<cmd>resize -2<CR>")
-keymap("n", "<A-Left>", "<cmd>vertical resize -2<CR>")
-keymap("n", "<A-Right>", "<cmd>vertical resize +2<CR>")
+-- Resize window using <Alt> arrow keys
+keymap("n", "<A-Up>", "<cmd>resize -2<CR>")
+keymap("n", "<A-Down>", "<cmd>resize +2<CR>")
+keymap("n", "<A-Right>", "<cmd>vertical resize -2<CR>")
+keymap("n", "<A-Left>", "<cmd>vertical resize +2<CR>")
 
 -- Add undo break-points
 keymap("i", ",", ",<c-g>u")
@@ -75,10 +75,10 @@ keymap("i", "vv", "<bar>>")
 
 -- Move Lines
 keymap("n", "<A-j>", ":m .+1<CR>==")
-keymap("v", "<A-j>", ":m '>+1<CR>gv=gv")
-keymap("i", "<A-j>", "<Esc>:m .+1<CR>==gi")
 keymap("n", "<A-k>", ":m .-2<CR>==")
+keymap("v", "<A-j>", ":m '>+1<CR>gv=gv")
 keymap("v", "<A-k>", ":m '<-2<CR>gv=gv")
+keymap("i", "<A-j>", "<Esc>:m .+1<CR>==gi")
 keymap("i", "<A-k>", "<Esc>:m .-2<CR>==gi")
 
 -- Buffer operations
