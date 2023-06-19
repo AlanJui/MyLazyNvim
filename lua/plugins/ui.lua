@@ -179,7 +179,7 @@ return {
     "rcarriga/nvim-notify",
     keys = {
       {
-        "<leader>nD",
+        "<leader>xD",
         function()
           require("notify").dismiss({ silent = true, pending = true })
         end,
@@ -224,28 +224,28 @@ return {
         desc = "Redirect Cmdline",
       },
       {
-        "<leader>nt",
+        "<leader>xn",
         function()
           require("noice").cmd("telescope")
         end,
         desc = "Noice Telescope",
       },
       {
-        "<leader>nl",
+        "<leader>xl",
         function()
           require("noice").cmd("last")
         end,
         desc = "Noice Last Message",
       },
       {
-        "<leader>nh",
+        "<leader>xh",
         function()
           require("noice").cmd("history")
         end,
         desc = "Noice History",
       },
       {
-        "<leader>na",
+        "<leader>xa",
         function()
           require("noice").cmd("all")
         end,

@@ -10,10 +10,15 @@ keymap("n", "L", "len(getline('.')) == 0 || len(getline('.')) == getpos('.')[2] 
 
 -- core useful
 keymap("n", "<leader><leader>", "<c-^>") -- Switch between 2 buffers
-keymap("n", "<TAB>", "%")
-vim.cmd('nnoremap <leader>p "*p') -- Paste content from OS's clipboard
-vim.cmd('vnoremap <leader>y "*y') -- Yank content in OS's clipboard
-vim.cmd("nnoremap <Enter> o<ESC>") -- Insert New Line quickly
+-- vim.cmd('nnoremap <leader>p "*p')
+-- vim.cmd('vnoremap <leader>y "*y') --
+-- vim.cmd("nnoremap <Enter> o<ESC>") --
+-- Paste content from OS's clipboard
+keymap("n", "<leader>p", '"*p')
+-- Yank content in OS's clipboard
+keymap("n", "<leader>y", '"*y')
+-- Insert New Line quickly
+keymap("n", "<Enter>", "o<ESC>")
 
 -- Better viewing
 keymap("n", "n", "nzzzv")
@@ -36,7 +41,7 @@ keymap("n", "<C-k>", "<C-w>k")
 keymap("n", "<C-l>", "<C-w>l")
 
 -- tabs
-keymap("n", "<leader><tab>", "<cmd>tabnext<cr>")
+-- keymap("n", "<leader><tab>", "<cmd>tabnext<cr>")
 
 -- Quick split window
 keymap("n", "_", [[<Cmd>sp<CR>]])
