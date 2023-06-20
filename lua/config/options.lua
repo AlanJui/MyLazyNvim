@@ -1,6 +1,11 @@
 vim.g.loaded_python2_provider = 0
 vim.g.loaded_python3_provider = 1
-vim.g.python3_host_prog = os.getenv("VIRTUAL_ENV") .. "/bin/python"
+local venv = os.getenv("VIRTUAL_ENV")
+if venv then
+  vim.g.python3_host_prog = venv .. "/bin/python"
+else
+  vim.g.python3_host_prog = os.getenv("HOME") .. "/.pyenv/vertsions/venv-3.10.6" .. "/bin/python"
+end
 vim.g.node_host_prog = os.getenv("HOME") .. "/n/lib/node_modules/neovim/bin/cli.js"
 vim.g.loaded_ruby_provider = 0
 vim.g.loaded_perl_provider = 0

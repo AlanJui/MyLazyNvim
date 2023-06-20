@@ -24,8 +24,7 @@ return {
 
       local normal_keymap = {
         -- Top Menu
-        -- ['<leader>'] = {'<cmd>GitFiles<cr>', 'find git files'},
-        [" "] = { ":Telescope find_files<CR>", "Find files" },
+        ["<leader>"] = { "<c-^>", "Quick Switch 2 Buffers" }, -- Switch between 2 buffers
         [","] = { ":Telescope buffers<CR>", "Show buffers" },
         ["h"] = {
           function()
