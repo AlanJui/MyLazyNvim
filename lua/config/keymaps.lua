@@ -1,3 +1,6 @@
+local utils = require("utils")
+local is_available = utils.is_available
+
 local keymap = vim.keymap.set
 
 -- Remap for dealing with word wrap
@@ -92,3 +95,17 @@ keymap("n", "gT", "<cmd>bp<CR>")
 
 -- Toggle diff buffers
 keymap("n", "<leader>dft", "&diff ? ':windo diffoff<cr>' : ':windo diffthis<cr>'", { expr = true })
+
+-- Comment
+if is_available("Comment.nvim") then
+  keymap("n", "<leader>/", function()
+    require("Comment.api").toggle.linewise.count(vim.v.count > 0 and vim.v.count or 1)
+  end, { desc = "Toggle comment line" })
+
+  keymap(
+    "v",
+    "<leader>/",
+    "<esc><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<cr>",
+    { desc = "Toggle comment for selection" }
+  )
+end

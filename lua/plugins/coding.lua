@@ -29,8 +29,8 @@ return {
     "kylechui/nvim-surround",
     event = "VeryLazy",
     config = function()
-        require("nvim-surround").setup()
-    end
+      require("nvim-surround").setup()
+    end,
   },
   -- auto pairs
   {
@@ -82,19 +82,30 @@ return {
   { "LudoPinelli/comment-box.nvim", event = "VeryLazy" },
   { "JoosepAlviste/nvim-ts-context-commentstring", lazy = true },
   {
-    "echasnovski/mini.comment",
-    event = "VeryLazy",
-    opts = {
-      hooks = {
-        pre = function()
-          require("ts_context_commentstring.internal").update_commentstring({})
-        end,
-      },
+    "numToStr/Comment.nvim",
+    keys = {
+      { "gc", mode = { "n", "v" }, desc = "Comment toggle linewise" },
+      { "gb", mode = { "n", "v" }, desc = "Comment toggle blockwise" },
     },
-    config = function(_, opts)
-      require("mini.comment").setup(opts)
+    opts = function()
+      local commentstring_avail, commentstring = pcall(require, "ts_context_commentstring.integrations.comment_nvim")
+      return commentstring_avail and commentstring and { pre_hook = commentstring.create_pre_hook() } or {}
     end,
   },
+  -- {
+  --   "echasnovski/mini.comment",
+  --   event = "VeryLazy",
+  --   opts = {
+  --     hooks = {
+  --       pre = function()
+  --         require("ts_context_commentstring.internal").update_commentstring({})
+  --       end,
+  --     },
+  --   },
+  --   config = function(_, opts)
+  --     require("mini.comment").setup(opts)
+  --   end,
+  -- },
   -- todo comments
   {
     "folke/todo-comments.nvim",
@@ -102,8 +113,20 @@ return {
     event = "BufReadPost",
     config = true,
     keys = {
-      { "]t", function() require("todo-comments").jump_next() end, desc = "Next todo comment", },
-      { "[t", function() require("todo-comments").jump_prev() end, desc = "Previous todo comment", },
+      {
+        "]t",
+        function()
+          require("todo-comments").jump_next()
+        end,
+        desc = "Next todo comment",
+      },
+      {
+        "[t",
+        function()
+          require("todo-comments").jump_prev()
+        end,
+        desc = "Previous todo comment",
+      },
       { "<leader>xt", "<cmd>TodoTrouble<cr>", desc = "Todo (Trouble)" },
       { "<leader>xT", "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme (Trouble)" },
       { "<leader>fT", "<cmd>TodoTelescope<cr>", desc = "Find Todo" },
@@ -136,8 +159,20 @@ return {
       })
     end,
     keys = {
-      { "]]", function() require("illuminate").goto_next_reference(false) end, desc = "Next Reference", },
-      { "[[", function() require("illuminate").goto_prev_reference(false) end, desc = "Prev Reference", },
+      {
+        "]]",
+        function()
+          require("illuminate").goto_next_reference(false)
+        end,
+        desc = "Next Reference",
+      },
+      {
+        "[[",
+        function()
+          require("illuminate").goto_prev_reference(false)
+        end,
+        desc = "Prev Reference",
+      },
     },
   },
   -- refactoring library based off the Refactoring book by Martin Fowler
@@ -150,43 +185,52 @@ return {
     opts = {},
     config = function(_, opts)
       require("refactoring").setup(opts)
-      require("telescope").load_extension "refactoring"
+      require("telescope").load_extension("refactoring")
     end,
-    keys = function ()
+    keys = function()
       vim.api.nvim_set_keymap(
         "v",
         "<leader>rr",
         "<Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>",
         { noremap = true, silent = true }
       )
-    end
+    end,
   },
   -- navigate between files that are related using regexp pattern
   {
-    "otavioschwanck/telescope-alternate" ,
+    "otavioschwanck/telescope-alternate",
     config = function()
-      require('telescope-alternate').setup({
-        presets = { 'rails', 'rspec', },
+      require("telescope-alternate").setup({
+        presets = { "rails", "rspec" },
         mappings = {
           -- jihulab rails
-          { 'jh/app/models/(.*).rb', {
-            { 'jh/app/controllers/**/*[1:pluralize]_controller.rb', 'JH Controller' },
-            { 'jh/app/views/[1:pluralize]/*.html.haml', 'JH View' },
-            { 'jh/app/helpers/[1]_helper.rb', 'JH Helper' },
-          } },
-          { 'jh/app/controllers(.*)/(.*)_controller.rb', {
-            { 'jh/app/models/**/*[2:singularize].rb', 'JH Model' },
-            { 'jh/app/views/[1][2]/*.html.haml', 'JH View' },
-            { 'jh/app/helpers/**/*[2]_helper.rb', 'JH Helper' },
-          } },
+          {
+            "jh/app/models/(.*).rb",
+            {
+              { "jh/app/controllers/**/*[1:pluralize]_controller.rb", "JH Controller" },
+              { "jh/app/views/[1:pluralize]/*.html.haml", "JH View" },
+              { "jh/app/helpers/[1]_helper.rb", "JH Helper" },
+            },
+          },
+          {
+            "jh/app/controllers(.*)/(.*)_controller.rb",
+            {
+              { "jh/app/models/**/*[2:singularize].rb", "JH Model" },
+              { "jh/app/views/[1][2]/*.html.haml", "JH View" },
+              { "jh/app/helpers/**/*[2]_helper.rb", "JH Helper" },
+            },
+          },
           -- jihulab rspec
-          { 'jh/app/(.*).rb', { { 'jh/spec/[1]_spec.rb', 'JH Test' } } },
-          { 'jh/spec/(.*)_spec.rb', { { 'jh/app/[1].rb', 'JH Original', true } } },
-          { 'jh/app/controllers/(.*)_controller.rb', { { 'jh/spec/requests/[1]_spec.rb', 'JH Request Test' } } },
-          { 'jh/spec/requests/(.*)_spec.rb', { { 'jh/app/controllers/[1]_controller.rb', 'JH Original Controller', true } } },
+          { "jh/app/(.*).rb", { { "jh/spec/[1]_spec.rb", "JH Test" } } },
+          { "jh/spec/(.*)_spec.rb", { { "jh/app/[1].rb", "JH Original", true } } },
+          { "jh/app/controllers/(.*)_controller.rb", { { "jh/spec/requests/[1]_spec.rb", "JH Request Test" } } },
+          {
+            "jh/spec/requests/(.*)_spec.rb",
+            { { "jh/app/controllers/[1]_controller.rb", "JH Original Controller", true } },
+          },
         },
       })
-      require('telescope').load_extension('telescope-alternate')
+      require("telescope").load_extension("telescope-alternate")
     end,
   },
 }
