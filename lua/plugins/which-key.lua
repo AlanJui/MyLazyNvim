@@ -83,6 +83,9 @@ return {
         },
         d = {
           name = "Debug",
+          a = {
+            name = "Adapter",
+          },
         },
         f = {
           -- telescope

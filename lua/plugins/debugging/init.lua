@@ -32,7 +32,7 @@ return {
       -- virtual text for the debugger
       {
         "theHamsta/nvim-dap-virtual-text",
-        opts = {}
+        opts = {},
       },
       -- which key integration
       -- {
@@ -75,8 +75,8 @@ return {
         "jbyuki/one-small-step-for-vimkind",
         -- stylua: ignore
         keys = {
-          { "<leader>daL", function() require("osv").launch({ port = 8086 }) end, desc = "Adapter Lua Server" },
-          { "<leader>dal", function() require("osv").run_this() end, desc = "Adapter Lua" },
+          { "<leader>daL", function() require("osv").launch({ port = 8086 }) end, desc = "Start Lua Debugger Server" },
+          { "<leader>dal", function() require("osv").run_this() end, desc = "Launch Lua Code" },
         },
         config = require("plugins.debugging.nlua"),
       },
@@ -85,8 +85,8 @@ return {
         "mfussenegger/nvim-dap-python",
         -- stylua: ignore
         keys = {
-          { "<leader>daP", function() require("dap-python").test_method() end, desc = "Adapter Python Server" },
-          { "<leader>dap", function() require("dap-python").test_class() end, desc = "Adapter Python" },
+          { "<leader>daP", function() require("dap-python").test_method() end, desc = "Start Python Debugger Server" },
+          { "<leader>dap", function() require("dap-python").test_class() end, desc = "Launch Python Code" },
         },
         config = require("plugins.debugging.python"),
       },
@@ -151,7 +151,7 @@ return {
           text = sign[1],
           texthl = sign[2] or "DiagnosticInfo",
           linehl = sign[3],
-          numhl = sign[3]
+          numhl = sign[3],
         })
       end
     end,
