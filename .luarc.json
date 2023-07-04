@@ -1,0 +1,9 @@
+{
+    "workspace.library": [
+        "~/.luarocks/share/lua/5.4/?.lua",
+        "~/.luarocks/share/lua/5.4/?/init.lua",
+        "~/.luarocks/lib/lua/5.4/?.so"
+    ],
+    "runtime.version": "Lua 5.4",
+    "hint.enable": false
+}
