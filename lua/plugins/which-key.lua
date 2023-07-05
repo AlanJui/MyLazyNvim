@@ -68,6 +68,7 @@ return {
             "Stack Overflow",
           },
         },
+        -- code
         c = {
           name = "Code",
           t = {
@@ -81,51 +82,79 @@ return {
             p = { "<cmd>AerialPrev<CR>", "Jump backwards 1 symbols" },
           },
         },
+        -- Build
         d = {
           name = "Debug",
           a = {
             name = "Adapter",
           },
         },
-        f = {
-          -- telescope
-          name = "Fuzzy finder",
-          a = { "<cmd>Telescope telescope-alternate alternate_file<cr>", "Alternate file" },
+        -- Debugging
+        -- Run
+        r = {
+          name = "Run Code",
+          p = { name = "Python" },
+          d = { name = "Django" },
+        },
+        -- Editing
+        R = {
+          name = "Replace",
+          -- Spectre
+          r = { [[<cmd>lua require('spectre').open_visual({select_word=true})<cr>]], "Replace cursor word" },
+          f = { [[viw:lua require('spectre').open_file_search()<cr>]], "Replace in current file" },
+          o = { [[<cmd>lua require('spectre').open()<CR>]], "Open spectre" },
+        },
+        s = {
+          name = "Search",
           b = { "<cmd>Telescope buffers<cr>", "Switch buffers" },
-          B = { "<cmd>Telescope file_browser<cr>", "File browser" },
-          h = { "<cmd>Telescope frecency<cr>", "Most (f)recently used files" },
-          j = { "<cmd>Telescope current_buffer_fuzzy_find<cr>", "Fuzzy find current buffer" },
-          m = { "<cmd>MarksListBuf<cr>", "Find Mark in buffer" },
-          d = { "<cmd>Telescope diagnostics<cr>", "Find Diagnostics" },
-          f = { "<cmd>Telescope find_files<cr>", "Find Files" },
-          r = { "<cmd>Telescope registers<cr>", "Find Registers" },
-          s = { "<cmd>Telescope grep_string<cr>", "Grep text under cursor" },
-          g = {
-            "<cmd>lua require'telescope'.extensions.live_grep_args.live_grep_args({default_text=vim.fn.expand('<cword>')})<cr>",
-            "Grep cursor word with args",
+          o = { "<cmd>Telescope aerial<cr>", "Code Outline" },
+          s = { "<cmd>Telescope find_files<cr>", "Find Files" },
+          f = {
+            name = "Search by File Name",
+            a = { "<cmd>Telescope telescope-alternate alternate_file<cr>", "Alternate file" },
+            b = { "<cmd>Telescope buffers<cr>", "Switch buffers" },
+            B = { "<cmd>Telescope file_browser<cr>", "File browser" },
+            h = { "<cmd>Telescope frecency<cr>", "Most (f)recently used files" },
+            f = { "<cmd>Telescope find_files<cr>", "Find Files" },
           },
-          t = { "<cmd>lua require'telescope'.extensions.live_grep_args.live_grep_args()<cr>", "Grep text with args" },
-          G = { "<cmd>Telescope live_grep<cr>", "Grep text" },
-          p = { "<cmd>Telescope lazy<cr>", "List lazy plugins info" },
-          P = { "<cmd>lua require'telescope'.extensions.project.project{}<cr>", "Find project" },
-          S = { "<cmd>Telescope luasnip<cr>", "Search snippet" },
+          g = {
+            name = "Search by Keywords",
+            b = { "<cmd>Telescope current_buffer_fuzzy_find<cr>", "Fuzzy find current buffer" },
+            g = { "<cmd>Telescope live_grep<cr>", "Grep text" },
+            G = {
+              "<cmd>lua require'telescope'.extensions.live_grep_args.live_grep_args({default_text=vim.fn.expand('<cword>')})<cr>",
+              "Grep cursor word with args",
+            },
+            c = { "<cmd>Telescope grep_string<cr>", "Grep text under cursor" },
+            t = { "<cmd>lua require'telescope'.extensions.live_grep_args.live_grep_args()<cr>", "Grep text with args" },
+          },
           e = {
-            name = "Extra finder",
-            C = { "<cmd>Telescope commands<cr>", "Commands" },
+            name = "Editing",
+            d = { "<cmd>Telescope diagnostics<cr>", "Find Diagnostics" },
+            m = { "<cmd>MarksListBuf<cr>", "Find Mark in buffer" },
+            o = { "<cmd>Telescope aerial<cr>", "Code Outline" },
+          },
+          t = {
+            name = "Search Tools",
+            c = { "<cmd>Telescope commands<cr>", "Commands" },
             h = { "<cmd>Telescope help_tags<cr>", "Find Help" },
             H = { "<cmd>Telescope heading<cr>", "Find Header" },
-            M = { "<cmd>Telescope man_pages<cr>", "Man Pages" },
-            S = { "<cmd>Telescope symbols<cr>", "Search symbols" },
             k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
-            o = { "<cmd>Telescope aerial<cr>", "Code Outline" },
+            l = { "<cmd>Telescope luasnip<cr>", "Search snippet" },
+            m = { "<cmd>Telescope man_pages<cr>", "Man Pages" },
+            p = { "<cmd>Telescope lazy<cr>", "List lazy plugins info" },
+            P = { "<cmd>lua require'telescope'.extensions.project.project{}<cr>", "Find project" },
+            r = { "<cmd>Telescope registers<cr>", "Find Registers" },
             s = {
               function()
                 require("telescope.builtin").colorscheme({ enable_preview = true })
               end,
               "Colorscheme",
             },
+            S = { "<cmd>Telescope symbols<cr>", "Search symbols" },
           },
         },
+        -- git
         g = {
           name = "Git",
           -- telescope
@@ -168,21 +197,95 @@ return {
             -- b = {'<cmd>Gbrowser<cr>', 'browse github'},
           },
         },
-        r = {
-          name = "Run Code",
-          p = { name = "Python" },
-          d = { name = "Django" },
+        -- LSP
+        l = {
+          name = "LSP",
+          -- diagnostics
+          d = {
+            name = "Diagnostics",
+            l = {
+              name = "LspSaga",
+              b = { "<cmd>Lspsaga show_buf_diagnostics<CR>", "Show buffer diagnostics" },
+              c = { "<cmd>Lspsaga show_cursor_diagnostics<CR>", "Show cursor diagnostics" },
+              l = { "<cmd>Lspsaga show_line_diagnostics<CR>", "Show line diagnostics" },
+            },
+            w = { ":Telescope diagnostics<CR>", "List diagnostics in worksapce" },
+            c = {
+              ":Telescope diagnostics bufnr=0<CR>",
+              "List diagnostics current file",
+            },
+            f = {
+              "<cmd>lua vim.diagnostic.open_float()<CR>",
+              "Open diagnostics floating",
+            },
+            p = {
+              "<cmd>lua vim.diagnostic.goto_prev()<CR>",
+              "Goto prev diagnostics",
+            },
+            n = {
+              "<cmd>lua vim.diagnostic.goto_next()<CR>",
+              "Goto next diagnostics",
+            },
+          },
+
+          f = { "<cmd>lua vim.lsp.buf.format()<CR>", "Formatting code" },
+          k = { "<cmd>lua vim.lsp.buf.hover()<CR>", "Show HoverDocument" },
+          g = {
+            name = "goto",
+            D = { "<cmd>lua vim.lsp.buf.declaration()<CR>", "Go to declaration" },
+            d = { "<cmd>lua vim.lsp.buf.definition()<CR>", "Go to definition" },
+            p = { ":Lspsaga peek_definition<CR>", "Peek definition" },
+            t = {
+              "<cmd>lua vim.lsp.buf.type_definition()<CR>",
+              "Go to type definition",
+            },
+            i = {
+              "<cmd>lua vim.lsp.buf.implementation()<CR>",
+              "Go to Implementation",
+            },
+            r = { "<cmd>lua vim.lsp.buf.references()<CR>", "References" },
+          },
+          m = {
+            name = "misc",
+            t = {
+              ":set filetype=htmldjango<CR>",
+              "set file type to django template",
+            },
+            T = { ":set filetype=html<CR>", "set file type to HTML" },
+          },
+          o = {
+            name = "Outline",
+            t = { "<cmd>AerialToggle<cr>", "Toggle outline window" },
+            o = { "<cmd>AerialOpen<cr>", "Open outline window" },
+            n = { "<cmd>AerialNext<CR>", "Jump forwards 1 symbols" },
+            p = { "<cmd>AerialPrev<CR>", "Jump backwards 1 symbols" },
+          },
+          r = { "<cmd>lua vim.lsp.buf.rename()<CR>", "Rename code" },
+          s = { "<cmd>lua vim.lsp.buf.signature_help()<CR>", "Show signature help" },
+          t = {
+            name = "Splitting/Joining blocks of code",
+            t = { "<cmd>lua require('treesj').toggle()<CR>", "Toggle node under cursor" },
+            s = { "<cmd>lua require('treesj').split()<CR>", "Split node under cursor" },
+            j = { "<cmd>lua require('treesj').join()<CR>", "Join node under cursor" },
+          },
+          u = { "<cmd>lua vim.cmd.UndotreeToggle()<CR>", "Toggle Undotree" },
+          w = {
+            name = "workspace",
+            l = {
+              "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>",
+              "List workspace folders",
+            },
+            a = {
+              "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>",
+              "Add folder to workspace",
+            },
+            r = {
+              "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>",
+              "Remove folder from workspace",
+            },
+          },
         },
-        R = {
-          name = "Replace",
-          -- Spectre
-          r = { [[<cmd>lua require('spectre').open_visual({select_word=true})<cr>]], "Replace cursor word" },
-          f = { [[viw:lua require('spectre').open_file_search()<cr>]], "Replace in current file" },
-          o = { [[<cmd>lua require('spectre').open()<CR>]], "Open spectre" },
-        },
-        s = {
-          name = "Search",
-        },
+        -- run code
         S = {
           name = "Session",
           -- session
@@ -195,10 +298,8 @@ return {
           name = "Test",
           -- vim-test plugin
         },
-        u = {
-          name = "Utilities",
-        },
-        U = {
+        -- Toggle options
+        T = {
           name = "Toggle option",
           -- toggle options
           f = {
@@ -232,6 +333,11 @@ return {
             "Toggle Diagnostics",
           },
         },
+        -- utilities
+        u = {
+          name = "Utilities",
+        },
+        -- Windows
         w = {
           name = "Window",
           ["-"] = { ":split<CR>", "Horiz. window" },
@@ -242,6 +348,33 @@ return {
           ["<Left>"] = { "<cmd>wincmd <<CR>", "Shrink narrowed" },
           ["<Right>"] = { "<cmd>wincmd ><CR>", "Grow widder" },
           c = { ":close<CR>", "Close window" },
+          -- Diagnosticls
+          d = {
+            name = "Diagnostics",
+            l = {
+              name = "LspSaga",
+              b = { "<cmd>Lspsaga show_buf_diagnostics<CR>", "Show buffer diagnostics" },
+              c = { "<cmd>Lspsaga show_cursor_diagnostics<CR>", "Show cursor diagnostics" },
+              l = { "<cmd>Lspsaga show_line_diagnostics<CR>", "Show line diagnostics" },
+            },
+            w = { ":Telescope diagnostics<CR>", "List diagnostics in worksapce" },
+            c = {
+              ":Telescope diagnostics bufnr=0<CR>",
+              "List diagnostics current file",
+            },
+            f = {
+              "<cmd>lua vim.diagnostic.open_float()<CR>",
+              "Open diagnostics floating",
+            },
+            p = {
+              "<cmd>lua vim.diagnostic.goto_prev()<CR>",
+              "Goto prev diagnostics",
+            },
+            n = {
+              "<cmd>lua vim.diagnostic.goto_next()<CR>",
+              "Goto next diagnostics",
+            },
+          },
           k = { "<C-w>k", "Up window" },
           j = { "<C-w>j", "Down window" },
           h = { "<C-w>h", "Left window" },

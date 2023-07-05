@@ -17,8 +17,16 @@ return {
       delete_check_events = "TextChanged",
     },
     config = function()
-      require("luasnip.loaders.from_vscode").lazy_load()
-      require("luasnip.loaders.from_vscode").lazy_load({ paths = { vim.fn.stdpath("config") .. "/snippets" } })
+      -- Load your own custom vscode style snippets
+      local config_dir = vim.fn.stdpath("config")
+      local package_root = vim.fn.stdpath("data") .. "/lazy"
+
+      require("luasnip.loaders.from_vscode").lazy_load({
+        paths = {
+          config_dir .. "/my-snippets",
+          package_root .. "/friendly-snippets",
+        },
+      })
 
       -- extends filetypes supported by snippets
       local luasnip = require("luasnip")
