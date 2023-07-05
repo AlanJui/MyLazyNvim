@@ -74,6 +74,14 @@ return {
           t = {
             name = "Splitting/Joining blocks of code",
           },
+          m = {
+            name = "misc",
+            t = {
+              ":set filetype=htmldjango<CR>",
+              "set file type to django template",
+            },
+            T = { ":set filetype=html<CR>", "set file type to HTML" },
+          },
           o = {
             name = "Outline",
             t = { "<cmd>AerialToggle<cr>", "Toggle outline window" },
@@ -81,6 +89,13 @@ return {
             n = { "<cmd>AerialNext<CR>", "Jump forwards 1 symbols" },
             p = { "<cmd>AerialPrev<CR>", "Jump backwards 1 symbols" },
           },
+          t = {
+            name = "Splitting/Joining blocks of code",
+            t = { "<cmd>lua require('treesj').toggle()<CR>", "Toggle node under cursor" },
+            s = { "<cmd>lua require('treesj').split()<CR>", "Split node under cursor" },
+            j = { "<cmd>lua require('treesj').join()<CR>", "Join node under cursor" },
+          },
+          -- u = { "<cmd>lua vim.cmd.UndotreeToggle()<CR>", "Toggle Undotree" },
         },
         -- Build
         d = {
@@ -93,8 +108,41 @@ return {
         -- Run
         r = {
           name = "Run Code",
-          p = { name = "Python" },
-          d = { name = "Django" },
+          p = {
+            name = "Python",
+            p = {
+              ":TermExec direction=horizontal cmd='python %'<CR>",
+              "Run current file",
+            },
+            l = {
+              ":TermExec direction=horizontal cmd='pylint %'<CR>",
+              "Lint current file",
+            },
+          },
+          d = {
+            name = "Django",
+            k = { ":2TermExec cmd='npx kill-port 8000'<CR>", "Kill Port" },
+            g = { ":2TermExec cmd='git status'<CR>", "git status" },
+            r = { ":TermExec cmd='poetry run python manage.py runserver'<CR>", "Runserver" },
+            R = {
+              ":TermExec cmd='poetry run python manage.py runserver --noreload'<CR>",
+              "Runserver --noreload",
+            },
+            S = { ":2TermExec cmd='poetry run python manage.py shell'<CR>", "Django Shell" },
+            s = {
+              ":2TermExec cmd='poetry run python manage.py createsuperuser'<CR>",
+              "Create super user",
+            },
+            c = {
+              ":2TermExec cmd='echo yes | poetry run python manage.py collectstatic --noinput'<CR>",
+              "Collect all static files",
+            },
+            m = {
+              ":2TermExec cmd='poetry run python manage.py makemigrations'<CR>",
+              "Update DB schema",
+            },
+            M = { ":2TermExec cmd='poetry run python manage.py migrate'<CR>", "Migrate DB" },
+          },
         },
         -- Editing
         R = {
@@ -245,30 +293,8 @@ return {
             },
             r = { "<cmd>lua vim.lsp.buf.references()<CR>", "References" },
           },
-          m = {
-            name = "misc",
-            t = {
-              ":set filetype=htmldjango<CR>",
-              "set file type to django template",
-            },
-            T = { ":set filetype=html<CR>", "set file type to HTML" },
-          },
-          o = {
-            name = "Outline",
-            t = { "<cmd>AerialToggle<cr>", "Toggle outline window" },
-            o = { "<cmd>AerialOpen<cr>", "Open outline window" },
-            n = { "<cmd>AerialNext<CR>", "Jump forwards 1 symbols" },
-            p = { "<cmd>AerialPrev<CR>", "Jump backwards 1 symbols" },
-          },
           r = { "<cmd>lua vim.lsp.buf.rename()<CR>", "Rename code" },
           s = { "<cmd>lua vim.lsp.buf.signature_help()<CR>", "Show signature help" },
-          t = {
-            name = "Splitting/Joining blocks of code",
-            t = { "<cmd>lua require('treesj').toggle()<CR>", "Toggle node under cursor" },
-            s = { "<cmd>lua require('treesj').split()<CR>", "Split node under cursor" },
-            j = { "<cmd>lua require('treesj').join()<CR>", "Join node under cursor" },
-          },
-          u = { "<cmd>lua vim.cmd.UndotreeToggle()<CR>", "Toggle Undotree" },
           w = {
             name = "workspace",
             l = {
@@ -336,6 +362,43 @@ return {
         -- utilities
         u = {
           name = "Utilities",
+          t = {
+            name = "terminal",
+            d = { "TermExec python manage.py shell<CR>", "Django-admin Shell" },
+            p = { "TermExec python<CR>", "Python shell" },
+            n = { "TermExec node<CR>", "Node.js shell" },
+            v = {
+              "TermExec --wintype='vsplit' --position='right'<CR>",
+              "Debug Term...",
+            },
+          },
+          l = {
+            name = "LiveServer",
+            l = { ":Bracey<CR>", "start live server" },
+            L = { ":BraceyStop<CR>", "stop live server" },
+            r = { ":BraceyReload<CR>", "web page to be reloaded" },
+          },
+          m = {
+            name = "Markdown",
+            m = { ":MarkdownPreview<CR>", "start markdown preview" },
+            M = { ":MarkdownPreviewStop<CR>", "stop markdown preview" },
+          },
+          u = {
+            name = "UML",
+            v = { ":PlantumlOpen<CR>", "start PlantUML preview" },
+            o = {
+              ":PlantumlSave docs/diagrams/out.png<CR>",
+              "export PlantUML diagram",
+            },
+          },
+          f = {
+            "TermExec --height=0.7 --width=0.9 --wintype=float vifm<CR>",
+            "ViFm",
+          },
+          r = {
+            "TermExec --height=0.7 --width=0.9 --wintype=float ranger<CR>",
+            "Ranger",
+          },
         },
         -- Windows
         w = {
