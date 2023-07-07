@@ -26,6 +26,7 @@ return {
         -- Top Menu
         ["<leader>"] = { "<c-^>", "Quick Switch 2 Buffers" }, -- Switch between 2 buffers
         [","] = { ":Telescope buffers<CR>", "Show buffers" },
+        ["/"] = { "<cmd>Telescope live_grep<cr>", "Grep text" },
         ["h"] = {
           function()
             local wins = vim.api.nvim_tabpage_list_wins(0)
@@ -201,6 +202,7 @@ return {
             },
             S = { "<cmd>Telescope symbols<cr>", "Search symbols" },
           },
+          T = { "<cmd>TodoTelescope keywords=TODO,FIX<cr>", "Find TODOs and FIXMEs" },
         },
         -- git
         g = {
@@ -310,6 +312,14 @@ return {
               "Remove folder from workspace",
             },
           },
+        },
+        -- Project
+        p = {
+          name = "Project",
+          q = { "<cmd>TodoQuickFix<cr>", "List all TODOs in project quickfix list" },
+          l = { "<cmd>TodoLocList<cr>", "List all TODOs in project" },
+          t = { "<cmd>TodoTrouble<cr>", "List all TODOs in project with trouble" },
+          s = { "<cmd>TodoTelescope<cr>", "Search through all project TODOs with Telescope" },
         },
         -- run code
         S = {

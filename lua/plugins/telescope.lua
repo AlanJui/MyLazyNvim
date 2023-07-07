@@ -25,17 +25,17 @@ return {
     -- stylua: ignore
     keys = {
       { "<leader><space>", require("utils").find_files, desc = "Find Files" },
-      { "<leader>ff", require("utils").find_files, desc = "Find Files" },
-      { "<leader>fo", "<cmd>Telescope frecency theme=dropdown previewer=false<cr>", desc = "Recent" },
-      { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
+      { "<leader>ss", require("utils").find_files, desc = "Find Files" },
+      { "<leader>sf", "<cmd>Telescope frecency theme=dropdown previewer=false<cr>", desc = "Recent" },
+      { "<leader>sb", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
       { "<leader>fr", "<cmd>Telescope file_browser<cr>", desc = "Browser" },
       { "<leader>gc", "<cmd>Telescope conventional_commits<cr>", desc = "Conventional Commits" },
       { "<leader>zs", "<cmd>Telescope lazy<cr>", desc = "Search Plugins" },
       { "<leader>ps", "<cmd>Telescope repo list<cr>", desc = "Search" },
       { "<leader>hs", "<cmd>Telescope help_tags<cr>", desc = "Search" },
       { "<leader>pp", function() require("telescope").extensions.project.project { display_type = "minimal" } end, desc = "List", },
-      { "<leader>sw", "<cmd>Telescope live_grep<cr>", desc = "Workspace" },
-      { "<leader>ss", "<cmd>Telescope luasnip<cr>", desc = "Snippets" },
+      { "<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "Live Grep (Search with Keywords)" },
+      { "<leader>sS", "<cmd>Telescope luasnip<cr>", desc = "Snippets" },
       { "<leader>sb", function() require("telescope.builtin").current_buffer_fuzzy_find() end, desc = "Buffer", },
       { "<leader>vo", "<cmd>Telescope aerial<cr>", desc = "Code Outline" },
       { "<leader>zc", function() require("telescope.builtin").colorscheme({enable_preview = true}) end, desc = "Colorscheme", },
@@ -46,6 +46,7 @@ return {
       local actions = require("telescope.actions")
       local actions_layout = require("telescope.actions.layout")
       local transform_mod = require("telescope.actions.mt").transform_mod
+      local trouble = require("trouble.providers.telescope")
       local custom_actions = transform_mod({
         -- VisiData
         visidata = function(prompt_bufnr)
@@ -114,6 +115,10 @@ return {
           border = {},
           borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
           color_devicons = true,
+          mappings = {
+            i = { ["<c-t>"] = trouble.open_with_trouble },
+            n = { ["<c-t>"] = trouble.open_with_trouble },
+          },
         },
         pickers = {
           find_files = {
