@@ -14,82 +14,21 @@ return {
           },
         },
       },
-      { "j-hui/fidget.nvim", config = true, tag = "legacy" },
+      { "j-hui/fidget.nvim", config = true },
       { "smjonas/inc-rename.nvim", config = true },
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
-      {
-        "hrsh7th/cmp-nvim-lsp",
-        cond = function()
-          return require("util").has("nvim-cmp")
-        end,
-      },
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-nvim-lsp-signature-help",
-      {
-        "folke/trouble.nvim",
-        cmd = { "TroubleToggle", "Trouble" },
-        opts = { use_diagnostic_signs = true },
-      },
+      "jay-babu/mason-null-ls.nvim",
     },
     opts = {
       servers = {
-        lua_ls = {
-          settings = {
-            Lua = {
-              workspace = {
-                checkThirdParty = false,
-                library = {
-                  [vim.fn.stdpath("config") .. "/lua"] = true,
-                  [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-                },
-              },
-              diagnostics = {
-                globals = { "vim", "hs" },
-              },
-              completion = {
-                callSnippet = "Replace",
-              },
-              telemetry = { enable = false },
-              hint = {
-                enable = false,
-              },
-            },
-          },
-        },
-        pyright = {
-          settings = {
-            python = {
-              analysis = {
-                typeCheckingMode = "off",
-                autoSearchPaths = true,
-                useLibraryCodeForTypes = true,
-                diagnosticMode = "workspace",
-                stubPath = vim.fn.stdpath("config") .. "/stubs",
-              },
-            },
-          },
-        },
-        tsserver = {
-          settings = {
-            typescript = {
-              tsdk = vim.fn.stdpath("config") .. "/typescript",
-            },
-          },
-        },
+        lua_ls = require("plugins.lsp.configs.lua-ls"),
+        pyright = require("plugins.lsp.configs.pyright"),
+        tsserver = require("plugins.lsp.configs.tsserver"),
+        yamlls = require("plugins.lsp.configs.yamlls"),
         dockerls = {},
-        yamlls = {
-          schemastore = {
-            enable = true,
-          },
-          settings = {
-            yaml = {
-              hover = true,
-              completion = true,
-              validate = true,
-            },
-          },
-        },
         bashls = {},
         cssls = {},
         html = {},
@@ -240,17 +179,6 @@ return {
       "nvim-tree/nvim-web-devicons",
     },
     config = true,
-  },
-
-  -- Tool for dsiplaying diagnostics, references, telescope results, quickfix and loclist items
-  {
-    "folke/trouble.nvim",
-    cmd = { "TroubleToggle", "Trouble" },
-    opts = { use_diagnostic_signs = true },
-    keys = {
-      { "<leader>cd", "<cmd>TroubleToggle document_diagnostics<cr>", desc = "Document Diagnostics" },
-      { "<leader>cD", "<cmd>TroubleToggle workspace_diagnostics<cr>", desc = "Workspace Diagnostics" },
-    },
   },
 
   -- LSP enhancements for neovim
