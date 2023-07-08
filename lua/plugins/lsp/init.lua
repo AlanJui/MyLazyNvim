@@ -14,6 +14,7 @@ return {
           },
         },
       },
+      -- { "j-hui/fidget.nvim", { 'tag': 'legacy', }, config = true },
       { "j-hui/fidget.nvim", config = true },
       { "smjonas/inc-rename.nvim", config = true },
       "williamboman/mason.nvim",

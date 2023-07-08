@@ -6,10 +6,10 @@ return {
       },
       workspace = {
         checkThirdParty = false,
-        -- library = {
-        --   [vim.fn.stdpath("config") .. "/lua"] = true,
-        --   [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-        -- },
+        library = {
+          [vim.fn.stdpath("config") .. "/lua"] = true,
+          [vim.fn.expand("$VIMRUNTIME/lua")] = true,
+        },
       },
       completion = {
         callSnippet = "Replace",
