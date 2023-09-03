@@ -1,6 +1,17 @@
+-- 獲取目前作用中之緩衝區編號
+local current_buffer = vim.api.nvim_get_current_buf()
+
+-- 獲取目前緩衝區的檔案類型（filetype）
+local filetype = vim.api.nvim_buf_get_option(current_buffer, "filetype")
+
+local lsp_provider = require("utils.lsp").lsp_provider
+
 return {
   {
     "nvim-lualine/lualine.nvim",
+    dependencies = {
+      "WhoIsSethDaniel/lualine-lsp-progress.nvim",
+    },
     event = "VeryLazy",
     opts = function(_, opts)
       local icons = require("lazyvim.config").icons
@@ -62,22 +73,23 @@ return {
           },
           lualine_x = {
             {
-              function()
-                return require("noice").api.status.command.get()
-              end,
-              cond = function()
-                return package.loaded["noice"] and require("noice").api.status.command.has()
-              end,
-              color = Util.fg("Statement"),
+              require("noice").api.status.message.get_hl,
+              cond = require("noice").api.status.message.has,
             },
             {
-              function()
-                return require("noice").api.status.mode.get()
-              end,
-              cond = function()
-                return package.loaded["noice"] and require("noice").api.status.mode.has()
-              end,
-              color = Util.fg("Constant"),
+              require("noice").api.status.command.get,
+              cond = require("noice").api.status.command.has,
+              color = { fg = "#ff9e64" },
+            },
+            {
+              require("noice").api.status.mode.get,
+              cond = require("noice").api.status.mode.has,
+              color = { fg = "#ff9e64" },
+            },
+            {
+              require("noice").api.status.search.get,
+              cond = require("noice").api.status.search.has,
+              color = { fg = "#ff9e64" },
             },
             {
               function()
@@ -103,6 +115,7 @@ return {
             },
           },
           lualine_y = {
+            lsp_provider,
             { "progress", separator = " ", padding = { left = 1, right = 0 } },
             { "location", padding = { left = 0, right = 1 } },
           },

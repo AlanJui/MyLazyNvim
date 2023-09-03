@@ -9,6 +9,9 @@ return {
     --   If not available, we use `mini` as the fallback
     "rcarriga/nvim-notify",
   },
+  keys = {
+    { "<leader>n", "<cmd>Noice<cr>", desc = "Noice" },
+  },
   opts = {
     -- add any options here
     lsp = {

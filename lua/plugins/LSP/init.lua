@@ -94,6 +94,7 @@ return {
                   "unused-local",
                   "missing-fields",
                   "undefined-doc-name",
+                  "undefined-field",
                 },
               },
               workspace = {
