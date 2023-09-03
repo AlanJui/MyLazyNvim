@@ -1,6 +1,6 @@
--- local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-local home_dir = vim.loop.os_homedir()
-local lazypath = home_dir .. "/.local/share/lnvim/lazy/lazy.nvim"
+-- local home_dir = vim.loop.os_homedir()
+-- local lazypath = home_dir .. "/.local/share/lnvim/lazy/lazy.nvim"
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
   -- bootstrap lazy.nvim
   -- stylua: ignore
