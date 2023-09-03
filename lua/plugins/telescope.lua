@@ -132,32 +132,16 @@ return {
       {
         "<leader>sg",
         function()
-          -- require("telescope.builtin").live_grep()
-          require("telescope").extensions.live_grep_args.live_grep_args()
+          require("telescope.builtin").live_grep()
         end,
         desc = "Grep (root dir)",
       },
       {
         "<leader>sG",
         function()
-          -- require("telescope.builtin").live_grep({ cwd = false })
-          require("telescope").extensions.live_grep_args.live_grep_args({ cwd = false })
+          require("telescope.builtin").live_grep({ cwd = false })
         end,
         desc = "Grep (cwd)",
-      },
-      {
-        "<leader>sw",
-        function()
-          require("telescope.builtin").telescope("grep_string")
-        end,
-        desc = "Word (root dir)",
-      },
-      {
-        "<leader>sW",
-        function()
-          require("telescope.builtin").telescope("grep_string", { cwd = false })
-        end,
-        desc = "Word (cwd)",
       },
       -- trouble
       { "<leader>xx", "<cmd>Telescope diagnostics bufnr=0<cr>", desc = "Document diagnostics" },
