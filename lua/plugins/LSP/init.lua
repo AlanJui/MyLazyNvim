@@ -117,6 +117,7 @@ return {
           }),
           nls.builtins.diagnostics.pydocstyle.with({ extra_args = { "--config=$ROOT/setup.cfg" } }),
           nls.builtins.formatting.autopep8,
+          nls.builtins.formatting.black,
           nls.builtins.formatting.isort,
           nls.builtins.formatting.djhtml,
           nls.builtins.formatting.markdown_toc, -- Markdown
@@ -174,6 +175,7 @@ return {
         "shellcheck",
         "shfmt",
         -- Python
+        "pyright",
         "pylint",
         "debugpy", -- DAP
         "isort",
@@ -182,6 +184,7 @@ return {
         "flake8",
         "djlint",
         "autopep8",
+        "black",
         -- Web Tools
         "typescript-language-server",
         "js-debug-adapter",
