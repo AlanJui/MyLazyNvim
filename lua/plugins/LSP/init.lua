@@ -264,12 +264,12 @@ return {
   {
     "williamboman/mason-lspconfig.nvim",
   },
-  {
-    "hrsh7th/cmp-nvim-lsp",
-    cond = function()
-      return require("lazyvim.util").has("nvim-cmp")
-    end,
-  },
+  -- {
+  --   "hrsh7th/cmp-nvim-lsp",
+  --   cond = function()
+  --     return require("lazyvim.util").has("nvim-cmp")
+  --   end,
+  -- },
   {
     "williamboman/mason.nvim",
     cmd = "Mason",
