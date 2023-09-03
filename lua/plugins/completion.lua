@@ -25,10 +25,24 @@ return {
         function()
           return require("luasnip").jumpable(1) and "<Plug>luasnip-jump-next" or "<tab>"
         end,
-        expr = true, silent = true, mode = "i",
+        expr = true,
+        silent = true,
+        mode = "i",
       },
-      { "<tab>", function() require("luasnip").jump(1) end, mode = "s" },
-      { "<s-tab>", function() require("luasnip").jump(-1) end, mode = { "i", "s" } },
+      {
+        "<tab>",
+        function()
+          require("luasnip").jump(1)
+        end,
+        mode = "s",
+      },
+      {
+        "<s-tab>",
+        function()
+          require("luasnip").jump(-1)
+        end,
+        mode = { "i", "s" },
+      },
     },
     opts = {
       history = true,
@@ -68,6 +82,7 @@ return {
       "hrsh7th/cmp-nvim-lua",
       "hrsh7th/cmp-nvim-lsp-signature-help",
       "ray-x/cmp-treesitter",
+      "onsails/lspkind.nvim",
     },
     opts = function()
       vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
@@ -110,6 +125,7 @@ return {
           completion = cmp.config.window.bordered(),
           documentation = cmp.config.window.bordered(),
         },
+        preselect = require("cmp").PreselectMode.None,
         completion = {
           completeopt = "menu,menuone,noinsert",
         },
