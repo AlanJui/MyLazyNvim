@@ -9,9 +9,6 @@ local lsp_provider = require("utils.lsp").lsp_provider
 return {
   {
     "nvim-lualine/lualine.nvim",
-    dependencies = {
-      "WhoIsSethDaniel/lualine-lsp-progress.nvim",
-    },
     event = "VeryLazy",
     opts = function(_, opts)
       local icons = require("lazyvim.config").icons
