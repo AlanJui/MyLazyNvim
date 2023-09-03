@@ -1,8 +1,6 @@
 return {
-  {
-    "LazyVim/LazyVim",
-    enableed = false,
-  },
+  { "folke/lazy.nvim", version = false },
+  { "LazyVim/LazyVim", version = false },
   -- library used by other plugins
   { "nvim-lua/plenary.nvim", lazy = true },
   { "nvim-lua/popup.nvim", lazy = true },
