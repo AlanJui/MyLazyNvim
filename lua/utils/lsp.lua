@@ -2,6 +2,17 @@ local M = {}
 
 local get_venv = require("utils.python").getVirtualEnv
 
+M.get_filetype = function()
+  -- 獲取目前作用中之緩衝區編號
+  local current_buffer = vim.api.nvim_get_current_buf()
+  -- 獲取目前緩衝區的檔案類型（filetype）
+  local filetype = vim.api.nvim_buf_get_option(current_buffer, "filetype")
+
+  return filetype
+
+  -- return vim.bo.filetype
+end
+
 M.lsp_provider = function()
   local clients = {}
   local icon = " "

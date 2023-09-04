@@ -1,9 +1,3 @@
--- 獲取目前作用中之緩衝區編號
-local current_buffer = vim.api.nvim_get_current_buf()
-
--- 獲取目前緩衝區的檔案類型（filetype）
-local filetype = vim.api.nvim_buf_get_option(current_buffer, "filetype")
-
 local lsp_provider = require("utils.lsp").lsp_provider
 
 return {
