@@ -2,7 +2,14 @@ return {
   settings = {
     Lua = {
       diagnostics = {
-        globals = { "vim", "hs" },
+        globals = { "vim", "hs", "astronvim" },
+        disable = {
+          "lowercase-global",
+          "unused-local",
+          "missing-fields",
+          "undefined-doc-name",
+          "assign-type-mismatch",
+        },
       },
       workspace = {
         checkThirdParty = false,
