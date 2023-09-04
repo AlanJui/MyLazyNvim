@@ -166,3 +166,31 @@ map("n", "<leader><tab><tab>", "<cmd>tabnew<cr>", { desc = "New Tab" })
 map("n", "<leader><tab>]", "<cmd>tabnext<cr>", { desc = "Next Tab" })
 map("n", "<leader><tab>d", "<cmd>tabclose<cr>", { desc = "Close Tab" })
 map("n", "<leader><tab>[", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
+
+--------------------------------------------------------------------
+-- My maps
+--------------------------------------------------------------------
+vim.g.maplocalleader = ","
+local keymap = vim.keymap.set
+
+keymap("i", "jj", "<Esc>")
+keymap("i", "jk", "<Esc>")
+
+--------------------------------------------------------------------
+-- Windows navigation
+--------------------------------------------------------------------
+-- Split window
+keymap("n", "<localleader>sh", ":split<CR>")
+keymap("n", "<localleader>sv", ":vsplit<CR>")
+
+-- Window Resize
+keymap("n", "<M-Up>", "<cmd>wincmd -<CR>")
+keymap("n", "<M-Down>", "<cmd>wincmd +<CR>")
+keymap("n", "<M-Left>", "<cmd>wincmd <<CR>")
+keymap("n", "<M-Right>", "<cmd>wincmd ><CR>")
+
+-- Move focus on window
+-- keymap("n", "<C-k>", "<cmd>wincmd k<CR>")
+-- keymap("n", "<C-j>", "<cmd>wincmd j<CR>")
+-- keymap("n", "<C-h>", "<cmd>wincmd h<CR>")
+-- keymap("n", "<C-l>", "<cmd>wincmd l<CR>")
