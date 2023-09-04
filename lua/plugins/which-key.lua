@@ -28,7 +28,6 @@ return {
         ["\\"] = { "<cmd>Telescope live_grep<cr>", "Grep text" },
         [","] = { ":Telescope buffers<CR>", "Show buffers" },
         ["."] = { "<cmd>Alpha<cr>", "Dashboard" },
-        ["f"] = { "<cmd>lua vim.lsp.buf.format()<CR>", "Formatting code" },
         -- Actions
         a = {
           name = "Actions",
@@ -61,17 +60,17 @@ return {
             end,
             "Stack Overflow",
           },
+          x = { "bdelete", "Close File (Delete buffer)" },
         },
         -- code
         c = {
           name = "Code",
-          m = {
-            name = "misc",
-            t = {
-              ":set filetype=htmldjango<CR>",
-              "set file type to django template",
-            },
-            T = { ":set filetype=html<CR>", "set file type to HTML" },
+          ["f"] = { "<cmd>lua vim.lsp.buf.format()<CR>", "Formatting code" },
+          j = {
+            name = "Splitting/Joining blocks of code",
+            t = { "<cmd>lua require('treesj').toggle()<CR>", "Toggle node under cursor" },
+            s = { "<cmd>lua require('treesj').split()<CR>", "Split node under cursor" },
+            j = { "<cmd>lua require('treesj').join()<CR>", "Join node under cursor" },
           },
           o = {
             name = "Outline",
@@ -80,13 +79,6 @@ return {
             n = { "<cmd>AerialNext<CR>", "Jump forwards 1 symbols" },
             p = { "<cmd>AerialPrev<CR>", "Jump backwards 1 symbols" },
           },
-          t = {
-            name = "Splitting/Joining blocks of code",
-            t = { "<cmd>lua require('treesj').toggle()<CR>", "Toggle node under cursor" },
-            s = { "<cmd>lua require('treesj').split()<CR>", "Split node under cursor" },
-            j = { "<cmd>lua require('treesj').join()<CR>", "Join node under cursor" },
-          },
-          -- u = { "<cmd>lua vim.cmd.UndotreeToggle()<CR>", "Toggle Undotree" },
         },
         -- Build/Run
         -- b = {
@@ -320,12 +312,12 @@ return {
           d = { "<cmd>DeleteSession<cr>", "Delete auto session" },
           f = { "<cmd>SearchSession<cr>", "Search auto session" },
         },
-        t = {
-          name = "Test",
-          -- vim-test plugin
-        },
+        -- T = {
+        --   name = "Test",
+        --   -- vim-test plugin
+        -- },
         -- Toggle options
-        T = {
+        t = {
           name = "Toggle option",
           -- toggle options
           f = {

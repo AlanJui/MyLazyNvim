@@ -5,18 +5,15 @@ return {
     build = (not jit.os:find("Windows"))
         and "echo 'NOTE: jsregexp is optional, so not a big deal if it fails to build'; make install_jsregexp"
       or nil,
-    -- dependencies = {
-    --   "rafamadriz/friendly-snippets",
-    --   "quoyi/rails-vscode",
-    --   {
-    --     "benfowler/telescope-luasnip.nvim",
-    --     config = function()
-    --       require("telescope").load_extension("luasnip")
-    --     end,
-    --   },
-    -- },
     dependencies = {
       "rafamadriz/friendly-snippets",
+      "quoyi/rails-vscode",
+      {
+        "benfowler/telescope-luasnip.nvim",
+        config = function()
+          require("telescope").load_extension("luasnip")
+        end,
+      },
     },
     -- stylua: ignore
     keys = {
@@ -73,10 +70,10 @@ return {
     version = false, -- last release is way too old
     event = "InsertEnter",
     dependencies = {
-      "hrsh7th/cmp-nvim-lsp",
-      "hrsh7th/cmp-buffer",
-      "hrsh7th/cmp-path",
-      "saadparwaiz1/cmp_luasnip",
+      { "hrsh7th/cmp-nvim-lsp", opts = nil },
+      { "hrsh7th/cmp-buffer", opts = nil },
+      { "hrsh7th/cmp-path", opts = nil },
+      { "saadparwaiz1/cmp_luasnip", opts = nil },
       "hrsh7th/cmp-emoji",
       "hrsh7th/cmp-cmdline",
       "hrsh7th/cmp-nvim-lua",
@@ -88,44 +85,9 @@ return {
       vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
       local cmp = require("cmp")
       local defaults = require("cmp.config.default")()
-      local luasnip = require("luasnip")
-
-      -- local has_words_before = function()
-      --   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-      --   return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-      -- end
-
-      -- `/` cmdline setup.
-      cmp.setup.cmdline("/", {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = {
-          { name = "buffer" },
-        },
-      })
-      -- `:` cmdline setup.
-      cmp.setup.cmdline(":", {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = cmp.config.sources({
-          { name = "path" },
-        }, {
-          {
-            name = "cmdline",
-            option = {
-              ignore_cmds = { "Man", "Git", "!" },
-            },
-          },
-        }),
-      })
 
       return {
-        view = {
-          entries = { name = "custom", selection_order = "near_cursor" },
-        },
-        window = {
-          completion = cmp.config.window.bordered(),
-          documentation = cmp.config.window.bordered(),
-        },
-        preselect = require("cmp").PreselectMode.None,
+        -- preselect = require("cmp").PreselectMode.None,
         completion = {
           completeopt = "menu,menuone,noinsert",
         },
