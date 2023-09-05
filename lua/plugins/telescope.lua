@@ -3,6 +3,7 @@ return {
     "nvim-telescope/telescope.nvim",
     dependencies = {
       "nvim-telescope/telescope-file-browser.nvim",
+      "nvim-telescope/telescope-ui-select.nvim",
       "nvim-telescope/telescope-live-grep-args.nvim",
       "nvim-telescope/telescope-project.nvim",
       "nvim-telescope/telescope-dap.nvim",
@@ -270,6 +271,11 @@ return {
           },
         },
         extensions = {
+          ["ui-select"] = {
+            require("telescope.themes").get_dropdown({
+              -- even more opts
+            }),
+          },
           file_browser = {
             theme = "dropdown",
             previewer = false,
@@ -297,6 +303,7 @@ return {
         },
       }
       telescope.setup(opts)
+      telescope.load_extension("ui-select")
       telescope.load_extension("fzf")
       telescope.load_extension("file_browser")
       telescope.load_extension("project")

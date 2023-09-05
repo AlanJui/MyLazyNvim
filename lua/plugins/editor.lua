@@ -7,7 +7,10 @@ return {
   -- Better quickfix window in Neovim
   { "kevinhwang91/nvim-bqf", ft = "qf" },
   -- search/replace in multiple files
-  { "nvim-pack/nvim-spectre" },
+  {
+    "nvim-pack/nvim-spectre",
+    opts = { open_cmd = "noswapfile vnew" },
+  },
 
   -- A better user experience for viewing and interacting with Vim marks
   {
@@ -132,5 +135,9 @@ return {
     config = function(_, opts)
       require("mini.align").setup(opts)
     end,
+  },
+  {
+    "tpope/vim-repeat",
+    opts = nil,
   },
 }

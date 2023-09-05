@@ -2,8 +2,16 @@ return {
   { "folke/lazy.nvim", version = false },
   { "LazyVim/LazyVim", version = false },
   -- library used by other plugins
-  { "nvim-lua/plenary.nvim", lazy = true },
+  { "nvim-lua/plenary.nvim", lazy = true, opts = nil },
   { "nvim-lua/popup.nvim", lazy = true },
+
+  -- session management. To save your session in the background, keeping track of open
+  -- bufffers, window arrangement, and more. You can restore sessions when returning
+  -- throuh the dashboard.
+  {
+    "folke/persistence.nvim",
+    opts = { options = { "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp" } },
+  },
 
   -- documention
   { "yianwillis/vimcdoc", event = "BufReadPre" },

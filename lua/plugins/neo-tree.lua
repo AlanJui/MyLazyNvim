@@ -1,57 +1,6 @@
 -- file explorer
 return {
   "nvim-neo-tree/neo-tree.nvim",
-  branch = "v3.x",
-  dependencies = {
-    "nvim-lua/plenary.nvim",
-    "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-    "MunifTanjim/nui.nvim",
-  },
-  cmd = "Neotree",
-  keys = {
-    -- {
-    --   "<leader>e",
-    --   function()
-    --     require("neo-tree.command").execute({ toggle = true, dir = require("util").get_root() })
-    --   end,
-    --   desc = "Explorer NeoTree (root dir)",
-    -- },
-    -- {
-    --   "<C-u>",
-    --   function()
-    --     require("neo-tree.command").execute({ toggle = true, dir = vim.loop.cwd() })
-    --   end,
-    --   desc = "Explorer NeoTree (cwd)",
-    -- },
-    {
-      "<leader>fe",
-      function()
-        require("neo-tree.command").execute({ toggle = true, dir = require("lazyvim.util").get_root() })
-      end,
-      desc = "Explorer NeoTree (root dir)",
-    },
-    {
-      "<leader>fE",
-      function()
-        require("neo-tree.command").execute({ toggle = true, dir = vim.loop.cwd() })
-      end,
-      desc = "Explorer NeoTree (cwd)",
-    },
-    { "<leader>e", "<leader>fe", desc = "Explorer NeoTree (root dir)", remap = true },
-    { "<leader>E", "<leader>fE", desc = "Explorer NeoTree (cwd)", remap = true },
-  },
-  deactivate = function()
-    vim.cmd([[Neotree close]])
-  end,
-  init = function()
-    vim.g.neo_tree_remove_legacy_commands = 1
-    if vim.fn.argc() == 1 then
-      local stat = vim.loop.fs_stat(vim.fn.argv(0))
-      if stat and stat.type == "directory" then
-        require("neo-tree")
-      end
-    end
-  end,
   opts = {
     close_if_last_window = true,
     filesystem = {
@@ -59,6 +8,7 @@ return {
       follow_current_file = {
         enabled = true, -- This will find and focus the file in the active buffer every
       },
+      use_libuv_file_watcher = true,
       filtered_items = {
         visible = false, -- when true, they will just be displayed differently than normal items
         hide_dotfiles = false,
@@ -101,8 +51,6 @@ return {
           --".null-ls_*",
         },
       },
-      hijack_netrw_behavior = "open_current",
-      use_libuv_file_watcher = true, -- This will use the OS level file watchers to detect changes
     },
     commands = {
       child_or_open = function(state)
@@ -129,6 +77,11 @@ return {
     window = {
       mappings = {
         ["<space>"] = "none",
+        ["<tab>"] = {
+          "toggle_node",
+          nowait = false, -- disable `nowait` if you have existing combos starting with this char that you want to use
+        },
+        ["<cr>"] = "open",
         ["/"] = "noop",
         ["h"] = "parent_or_close",
         ["l"] = "child_or_open",
