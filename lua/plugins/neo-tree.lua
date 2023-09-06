@@ -2,7 +2,9 @@
 return {
   "nvim-neo-tree/neo-tree.nvim",
   opts = {
-    close_if_last_window = true,
+    -- close_if_last_window = true,
+    sources = { "filesystem", "buffers", "git_status", "document_symbols" },
+    open_files_do_not_replace_types = { "terminal", "Trouble", "qf", "Outline" },
     filesystem = {
       bind_to_cwd = true,
       follow_current_file = {
