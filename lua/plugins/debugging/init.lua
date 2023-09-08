@@ -91,7 +91,11 @@ return {
         config = require("plugins.debugging.python"),
       },
       -- JavaScript adapter
-      {
+      { -- Debugger for DAP
+        "microsoft/vscode-js-debug",
+        build = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out",
+      },
+      { -- Plugin for DAP in Neovim to use VSCode's JavaScript debugger
         "mxsdev/nvim-dap-vscode-js",
         keys = {},
         config = require("plugins.debugging.js"),
@@ -116,19 +120,6 @@ return {
       { "<leader>dt", function() require("dap").terminate() end, desc = "Terminate" },
       { "<leader>dw", function() require("dap.ui.widgets").hover() end, desc = "Widgets" },
     },
-    opts = {
-      setup = {
-        osv = function(_, _)
-          require("plugins.debugging.lua").setup()
-        end,
-        python = function(_, _)
-          require("plugins.debugging.python").setup()
-        end,
-        -- js = function(_, _)
-        --   require("plugins.debugging.js").setup()
-        -- end,
-      },
-    },
     config = function(plugin, opts)
       -- 設定除錯器在使用者介面上使用的圖徵符號（Icons）
       local Config = require("lazyvim.config")
@@ -142,25 +133,5 @@ return {
         )
       end
     end,
-    -- config = function(plugin, opts)
-    --   local dap_icons = {
-    --     Stopped = { "󰁕 ", "DiagnosticWarn", "DapStoppedLine" },
-    --     Breakpoint = " ",
-    --     BreakpointCondition = " ",
-    --     BreakpointRejected = { " ", "DiagnosticError" },
-    --     LogPoint = "💬",
-    --   }
-    --   vim.api.nvim_set_hl(0, "DapStoppedLine", { default = true, link = "Visual" })
-    --
-    --   for name, sign in pairs(dap_icons) do
-    --     sign = type(sign) == "table" and sign or { sign }
-    --     vim.fn.sign_define("Dap" .. name, {
-    --       text = sign[1],
-    --       texthl = sign[2] or "DiagnosticInfo",
-    --       linehl = sign[3],
-    --       numhl = sign[3],
-    --     })
-    --   end
-    -- end,
   },
 }
