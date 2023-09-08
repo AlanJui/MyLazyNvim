@@ -100,6 +100,11 @@ return {
         keys = {},
         config = require("plugins.debugging.js"),
       },
+      -- build debugger from source
+      {
+        "microsoft/vscode-js-debug",
+        build = "npm i && npm run compile vsDebugServerBundle && mv dist out",
+      },
     },
     -- stylua: ignore
     keys = {
